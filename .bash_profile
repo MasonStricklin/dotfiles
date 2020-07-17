@@ -8,8 +8,10 @@ export PATH=/usr/local/opt/python@3.8/libexec/bin:${PATH}
 alias bashrc="cd ~ && vim .bash_profile"
 alias vimrc="cd ~ && vim .vimrc"
 
-# Navigate to the rood directory quickly
+# Quickly navigate to home, root, and workspace directories
 alias ~="cd ~"
+alias /="cd /"
+alias code="cd ~/Documents/Code"
 
 # Always include hidden files
 alias ls="ls -a"
@@ -17,6 +19,6 @@ alias ls="ls -a"
 # Recursively remove directories and prompt before removal
 alias rm="rm -ir"
 
-# Recursively remove directories and without prompting before removal
+# Recursively remove directories without prompting before removal
 alias rmr="rm -fr"
 
