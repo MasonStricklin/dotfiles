@@ -9,8 +9,8 @@ alias bashrc="cd ~ && vim .bash_profile"
 alias vimrc="cd ~ && vim .vimrc"
 
 # Quickly navigate to home, root, and workspace directories
-alias ~="cd ~"
-alias /="cd /"
+alias home="cd ~"
+alias root="cd /"
 alias code="cd ~/Documents/Code"
 
 # Always include hidden files
