@@ -1,11 +1,11 @@
-# PS1 generated using this website: http://bashrcgenerator.com/
-export PS1="\[\033[38;5;129m\][\[$(tput sgr0)\]\[\033[38;5;34m\]\t\[$(tput sgr0)\]\[\033[38;5;129m\]]\[$(tput sgr0)\]\[\033[38;5;36m\]\u\[$(tput sgr0)\]\[\033[38;5;129m\]:\[$(tput sgr0)\]\[\033[38;5;38m\]\w\[$(tput sgr0)\]\[\033[38;5;129m\]\\$\[$(tput sgr0)\]"
+# PS1 generated using this website: https://zsh-prompt-generator.site/ 
+export PS1="%F{128}[%f%F{71}%*%f%F{128}]%f%F{79}%n%f%F{128}:%f%F{87}%~%f%F{128}$%f"
 
 # Add homebrew python to PATH
 export PATH=/usr/local/opt/python@3.8/libexec/bin:${PATH}
 
 # Quickly access dot files
-alias bashrc="cd ~ && vim .bash_profile"
+alias zshrc="cd ~ && vim .zshrc"
 alias vimrc="cd ~ && vim .vimrc"
 
 # Quickly navigate to home, root, and workspace directories
