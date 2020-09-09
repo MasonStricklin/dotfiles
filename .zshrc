@@ -20,5 +20,4 @@ alias ls="ls -a"
 alias rm="rm -ir"
 
 # Recursively remove directories without prompting before removal
-alias rmr="rm -fr"
-
+alias rmf="rm -fr"
