@@ -21,3 +21,4 @@ alias rm="rm -ir"
 
 # Recursively remove directories without prompting before removal
 alias rmf="rm -fr"
+
