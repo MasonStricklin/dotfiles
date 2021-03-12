@@ -1,5 +1,6 @@
 # PS1 generated using this website: https://zsh-prompt-generator.site/ 
-export PS1="%F{128}[%f%F{71}%*%f%F{128}]%f%F{79}%n%f%F{128}:%f%F{87}%~%f%F{128}$%f"
+# export VERBOSE_PS1="%F{128}[%f%F{71}%*%f%F{128}]%f%F{79}%n%f%F{128}:%f%F{87}%~%f%F{128}$%f"
+export PS1="%B%F{47}%~%f%b "
 
 # Add homebrew python to PATH
 export PATH=/usr/local/opt/python@3.8/libexec/bin:${PATH}
