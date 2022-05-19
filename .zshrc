@@ -21,7 +21,3 @@ alias rm="rm -ir"
 
 # Recursively remove directories without prompting before removal
 alias rmf="rm -fr"
-
-# Alias for common ngrok command
-alias nk="ngrok http -host-header=rewrite"
-
