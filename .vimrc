@@ -48,4 +48,3 @@ set expandtab
 
 " Places a vertical line at the provided charcount. 120 is personal preference
 set colorcolumn=120
-
