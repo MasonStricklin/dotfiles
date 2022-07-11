@@ -1,0 +1,3 @@
+- Disable hot corners in mission control settings
+- Disable “Show Floating Thumbnail” screenshot option
+- Disable inverted scroll in mouse settings
