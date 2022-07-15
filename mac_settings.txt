@@ -1,3 +1,5 @@
 - Disable hot corners in mission control settings
 - Disable “Show Floating Thumbnail” screenshot option
 - Disable inverted scroll in mouse settings
+- Disable screenshot thumbnail previews in cmd+shift+5 panel
+
