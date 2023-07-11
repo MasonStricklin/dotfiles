@@ -2,4 +2,7 @@
 - Disable “Show Floating Thumbnail” screenshot option
 - Disable inverted scroll in mouse settings
 - Disable screenshot thumbnail previews in cmd+shift+5 panel
-
+- Show file extensions via Finder > Preferences > Advanced > “Show all filename extensions
+- Install Specacle, ensure it opens on startup
+- Install Spotify, ensure it does not open on startup
+- Install Brave and Chrome
