@@ -3,8 +3,11 @@
 - Disable inverted scroll in mouse settings
 - Disable screenshot thumbnail previews in cmd+shift+5 panel
 - Show file extensions via Finder > Preferences > Advanced > “Show all filename extensions
+- Install NordVPN, ensure it opens on startup
 - Install Specacle, ensure it opens on startup
 - Install Spotify, ensure it does not open on startup
 - Install Brave, 
   - Set default search engine to Google
   - Install password manager, Fakespot, and uBlock Origin
+  - Help > Warn Before Quitting (⌘Q)
+
