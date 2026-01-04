@@ -6,8 +6,14 @@
 - Install NordVPN, ensure it opens on startup
 - Install Specacle, ensure it opens on startup
 - Install Spotify, ensure it does not open on startup
-- Install Brave, 
+- Install Logi Options: https://www.logitech.com/en-us/software/logi-options-plus.html
+  - Setup mission control button
+  - Setup move desktop left button
+  - Setup move desktop right button
+- Install Brave
   - Set default search engine to Google
   - Install password manager, Fakespot, and uBlock Origin
+    - [TODO] Find alternative to Fakespot
   - Help > Warn Before Quitting (⌘Q)
+    - [Optional] Apply this setting to Chrome, Safari, and any other installed browser
 
