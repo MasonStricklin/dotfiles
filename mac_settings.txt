@@ -1,7 +1,7 @@
 - Disable hot corners in mission control settings
-- Disable “Show Floating Thumbnail” screenshot option
 - Disable inverted scroll in mouse settings
 - Disable screenshot thumbnail previews in cmd+shift+5 panel
+- Set “Click wallpaper to reveal desktop” to "Only in Stage Manager" in Desktop & Dock settings
 - Show file extensions via Finder > Preferences > Advanced > “Show all filename extensions
 - Install NordVPN, ensure it opens on startup
 - Install Specacle, ensure it opens on startup
