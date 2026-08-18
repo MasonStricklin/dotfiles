@@ -1,19 +1,21 @@
 - Disable hot corners in mission control settings
 - Disable inverted scroll in mouse settings
 - Disable screenshot thumbnail previews in cmd+shift+5 panel
+- Enable Desktop & Dock > “Hold ⌥ key while dragging windows to tile”
 - Set “Click wallpaper to reveal desktop” to "Only in Stage Manager" in Desktop & Dock settings
 - Show file extensions via Finder > Preferences > Advanced > “Show all filename extensions
 - Install NordVPN, ensure it opens on startup
-- Install Specacle, ensure it opens on startup
+- Install Rectangle, ensure it opens on startup
+  - Enable “Green stoplight button maximizes instead of Full Screen”
 - Install Spotify, ensure it does not open on startup
 - Install Logi Options: https://www.logitech.com/en-us/software/logi-options-plus.html
-  - Setup mission control button
-  - Setup move desktop left button
-  - Setup move desktop right button
+  - Mission Control button should work as desired out of the box
+  - Configure custom Smart Actions mapped to Control–Left Arrow and Control–Right Arrow
+    - Set up move desktop left button
+    - Set up move desktop right button
 - Install Brave
   - Set default search engine to Google
-  - Install password manager, Fakespot, and uBlock Origin
-    - [TODO] Find alternative to Fakespot
+  - Install Bitwarden/1Password
   - Help > Warn Before Quitting (⌘Q)
     - [Optional] Apply this setting to Chrome, Safari, and any other installed browser
 
