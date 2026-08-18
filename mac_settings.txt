@@ -5,7 +5,6 @@
 - Set “Click wallpaper to reveal desktop” to "Only in Stage Manager" in Desktop & Dock settings
 - Increase mouse tracking speed. Typically max - 1 or max - 2 ticks
 - Show file extensions via Finder > Preferences > Advanced > “Show all filename extensions
-- Install NordVPN, ensure it opens on startup
 - Install Rectangle, ensure it opens on startup
   - Enable “Green stoplight button maximizes instead of Full Screen”
 - Install Spotify, ensure it does not open on startup
