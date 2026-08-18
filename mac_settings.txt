@@ -10,9 +10,7 @@
 - Install Spotify, ensure it does not open on startup
 - Install Logi Options: https://www.logitech.com/en-us/software/logi-options-plus.html
   - Mission Control button should work as desired out of the box
-  - Configure custom Smart Actions mapped to Control–Left Arrow and Control–Right Arrow
-    - Set up move desktop left button
-    - Set up move desktop right button
+  - Configure custom gestures for "Desktop Left" and "Desktop Right"
 - Install Brave
   - Set default search engine to Google
   - Install Bitwarden/1Password
