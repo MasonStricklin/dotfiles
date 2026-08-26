@@ -9,6 +9,7 @@
 - System Settings > Desktop & Dock: set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
 - System Settings > Appearance: set “Show scroll bars” to “Always”
 - System Settings > Wallpaper: select a solid-color wallpaper
+- System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
 - System Settings > Menu Bar:
   - Ensure Clock, Battery, Bluetooth, Sound, and Now Playing are shown
   - Set Sound and Now Playing to “Always Show”
