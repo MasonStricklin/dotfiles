@@ -7,6 +7,7 @@
 - Press ⌘⇧5 > Options: turn off “Show Floating Thumbnail”
 - System Settings > Desktop & Dock > Windows: turn on “Hold ⌥ key while dragging windows to tile”
 - System Settings > Desktop & Dock: set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
+- System Settings > Desktop & Dock: device and monitor-dependent desktop and dock configuration
 - System Settings > Appearance: set “Show scroll bars” to “Always”
 - System Settings > Wallpaper: select a solid-color wallpaper
 - System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
