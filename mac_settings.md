@@ -44,8 +44,10 @@
     - Assign the right gesture to “Desktop Right”
   - Logi Options+ > select the mouse > Point & Scroll: set horizontal scroll direction to “Inverted”
 
-- Install Brave
-  - Brave > Settings > Search engine: set “Search engine used in the address bar” to “Google”
-  - Brave > Extensions: install either Bitwarden or 1Password
-  - Help > Warn Before Quitting (⌘Q)
-    - [Optional] Enable the equivalent setting in Chrome, Safari, and other installed browsers where supported
+Install Brave, Chrome, and Firefox
+  - Each browser > Settings > Search engine: set the address-bar search engine to Google
+  - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
+
+- Install either Bitwarden or 1Password
+  - Install the desktop app
+  - Brave, Chrome, and Firefox > Extensions: install the corresponding extension in each browser
