@@ -14,7 +14,6 @@
 - Finder > Home (`~`) > Pictures: create a `Screenshots` folder
   - Control-click `Screenshots` > Customize Folder…: add the picture symbol
 - Physical Dock:
-  - Drag the divider to maximize the Dock’s size
   - Add Downloads, Home (`~`), and Screenshots below the divider, ordered top to bottom
   - Control-click each folder > “Display as” > “Folder”
 - Press ⌘⇧5 > Options:
