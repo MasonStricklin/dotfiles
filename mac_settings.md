@@ -36,6 +36,7 @@
   - [Suggested] Reorder menu bar items by holding ⌘ while dragging, from left to right: company VPN/company-specific app, Rectangle, Bluetooth, Wi-Fi, Sound, Now Playing, Battery
   - [Suggested] “Allow in the Menu Bar” > installed-app controls: show only the company VPN/company-specific app and Rectangle
 - System Settings > Users & Groups > click ⓘ next to the user > click the profile picture: choose “Emoji,” select a standard emoji, and set a solid-color background
+- System Settings > Touch ID & Password: add both index fingers
 - Finder > Settings > Advanced: turn on “Show all filename extensions”
 
 ## Software
