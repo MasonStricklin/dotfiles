@@ -4,10 +4,22 @@
 - System Settings > Mouse:
   - Turn off “Natural scrolling”
   - Set “Tracking speed” to one or two ticks below maximum
-- Press ⌘⇧5 > Options: turn off “Show Floating Thumbnail”
 - System Settings > Desktop & Dock > Windows: turn on “Hold ⌥ key while dragging windows to tile”
 - System Settings > Desktop & Dock: set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
-- System Settings > Desktop & Dock: device and monitor-dependent desktop and dock configuration
+- System Settings > Displays:
+  - Arrangement: match physical positions and pointer transitions
+  - Resolution: match external monitors; the Mac display may differ
+  - Main display: consider the center monitor or MacBook display
+- System Settings > Desktop & Dock: set “Dock position on screen” to “Right”
+- Finder > Home (`~`) > Pictures: create a `Screenshots` folder
+  - Control-click `Screenshots` > Customize Folder…: add the picture symbol
+- Physical Dock:
+  - Drag the divider to maximize the Dock’s size
+  - Add Downloads, Home (`~`), and Screenshots below the divider, ordered top to bottom
+  - Control-click each folder > “Display as” > “Folder”
+- Press ⌘⇧5 > Options:
+  - “Save to” > “Other Location…”: select `~/Pictures/Screenshots`
+  - Turn off “Show Floating Thumbnail”
 - System Settings > Appearance: set “Show scroll bars” to “Always”
 - System Settings > Wallpaper: select a solid-color wallpaper
 - System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
@@ -34,9 +46,6 @@
   - Rectangle > Settings: set “Repeated commands” to “cycle sizes on side actions”
     - Enable all repeated-command sizes: ½, ⅔, ¾, ¼, and ⅓
 
-- Install Spotify
-  - Spotify > Settings > Startup and window behaviour: set “Open Spotify automatically after you log into the computer” to “No”
-
 - Install Logi Options+: [https://www.logitech.com/en-us/software/logi-options-plus.html](https://www.logitech.com/en-us/software/logi-options-plus.html)
   - Logi Options+ > select the mouse > Buttons: verify that the Mission Control button works as desired
   - Logi Options+ > select the mouse > Buttons > Gesture Button > Custom:
@@ -44,10 +53,13 @@
     - Assign the right gesture to “Desktop Right”
   - Logi Options+ > select the mouse > Point & Scroll: set horizontal scroll direction to “Inverted”
 
-Install Brave, Chrome, and Firefox
+- Install Brave, Chrome, and Firefox
   - Each browser > Settings > Search engine: set the address-bar search engine to Google
   - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
 
 - Install either Bitwarden or 1Password
   - Install the desktop app
   - Brave, Chrome, and Firefox > Extensions: install the corresponding extension in each browser
+
+- Install Spotify (Personal)
+  - Spotify > Settings > Startup and window behaviour: set “Open Spotify automatically after you log into the computer” to “No”
