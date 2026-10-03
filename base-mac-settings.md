@@ -16,6 +16,8 @@
 - Physical Dock:
   - Add Downloads, Home (`~`), and Screenshots below the divider, ordered top to bottom
   - Control-click each folder > “Display as” > “Folder”
+  - Control-click Home (`~`) > “Sort by” > “Name”
+  - Control-click Downloads and Screenshots > “Sort by” > “Date Created”
 - Press ⌘⇧5 > Options:
   - “Save to” > “Other Location…”: select `~/Pictures/Screenshots`
   - Turn off “Show Floating Thumbnail”
@@ -40,6 +42,25 @@
 
 ## Software
 
+- Install Firefox, Brave, and Chrome
+  - Firefox: [Download](https://www.firefox.com/)
+  - System Settings > Desktop & Dock > Default web browser: select Firefox
+  - Firefox > Settings > Sync: sign in with the primary email and turn on syncing for “Settings”
+  - Each browser > Settings > Search engine: set the address-bar search engine to Google
+  - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
+
+- Install either Bitwarden or 1Password
+  - Install the desktop app
+  - Brave, Chrome, and Firefox > Extensions: install the corresponding extension in each browser
+
+- Install Ghostty: [Download](https://ghostty.org/download)
+
+- Install Zed: [Download](https://zed.dev/download)
+
+- Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
+
+- Install Codex: [Desktop app setup](https://developers.openai.com/codex/app)
+
 - Install Rectangle and configure it to open at login
   - Rectangle > Settings: turn on “Green stoplight button maximizes instead of Full Screen”
   - Rectangle > Settings: turn on “Check for updates automatically”
@@ -52,14 +73,6 @@
     - Assign the left gesture to “Desktop Left”
     - Assign the right gesture to “Desktop Right”
   - Logi Options+ > select the mouse > Point & Scroll: set horizontal scroll direction to “Inverted”
-
-- Install Brave, Chrome, and Firefox
-  - Each browser > Settings > Search engine: set the address-bar search engine to Google
-  - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
-
-- Install either Bitwarden or 1Password
-  - Install the desktop app
-  - Brave, Chrome, and Firefox > Extensions: install the corresponding extension in each browser
 
 - Install Spotify (Personal)
   - Spotify > Settings > Startup and window behaviour: set “Open Spotify automatically after you log into the computer” to “No”

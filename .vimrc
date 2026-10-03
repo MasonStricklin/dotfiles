@@ -1,50 +1,38 @@
-" Inspired by vimrc taken from this website: https://vim.fandom.com/wiki/Example_vimrc
-
-" Attempt to determine the type of a file based on its name and possibly its contents. Use this to allow intelligent
-" auto-indenting for each filetype, and for plugins that are filetype specific
+" Language — detect filetype; load its settings/indent rules; color syntax
 filetype indent plugin on
-
-" Enable syntax highlighting
 syntax on
 
-" Better command-line completion
-set wildmenu
- 
-" Show partial commands in the last line of the screen
-set showcmd
- 
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the mapping of <C-L> below)
+" Search — preview/highlight matches; capitals make searches case-sensitive.
+" Example: /hello ignores case; /Hello respects it.
+set incsearch
 set hlsearch
-
-" Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
+" Ctrl-L clears search highlights and redraws the screen.
+nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 
-" When opening a new line and no filetype-specific indenting is enabled, keep the same indent as the line you're
-" currently on. Useful for `READMEs, etc.
+" Indentation — carry indent to new lines; use four spaces instead of tabs
 set autoindent
- 
-" Stop certain movements from always going to the first character of a line. While this behaviour deviates from that of
-" Vi, it does what most users coming from other editors would expect.
-set nostartofline
-
-" Display the cursor position on the last line of the screen or in the status line of a window
-set ruler
-
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
-
-" Enable use of the mouse for all modes
-set mouse=a
- 
-" Display line numbers on the left
-set number
- 
-" Indentation settings for using 4 spaces instead of tabs. Do not change 'tabstop' from its default value of 8 with
-" this setup
+" Example: >> and << indent/unindent by four spaces.
 set shiftwidth=4
-set softtabstop=4
+set softtabstop=4    " Tab/Backspace move in four-space steps while typing.
 set expandtab
+set nostartofline   " Keep cursor column on moves that otherwise jump to line start.
 
-" Places a vertical line at the provided charcount. 120 is personal preference
-set colorcolumn=120
+" Feedback — completion choices, unfinished commands, and cursor position
+" Example: :colorscheme <Tab> shows completion choices.
+set wildmenu
+" Example: the first d of dd appears while the command is unfinished.
+set showcmd
+set ruler           " Show cursor line/column.
+set number          " Show line numbers beside the text.
+set mouse=a         " Enable mouse interaction in all modes.
+set visualbell      " Visual feedback instead of an audible error bell.
+set colorcolumn=120 " Draw a column guide; does not wrap or limit line length.
+
+" Undo — u still works after reopening a file; store history outside projects
+if has('persistent_undo')
+    let &undodir = expand('~/.vim/undo')
+    call mkdir(&undodir, 'p', 0700) " Create missing parents; owner-only access.
+    set undofile
+endif
