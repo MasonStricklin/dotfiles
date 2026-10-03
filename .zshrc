@@ -13,6 +13,9 @@ fi
 # Example: ~ or ~/Documents/Code
 PS1="%B%F{209}%~%f%b "
 
+# Local executables — includes Claude Code.
+export PATH="$HOME/.local/bin:$PATH"
+
 # History — save commands immediately to ~/.zsh_history
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000   # Commands kept in memory; extra room for duplicate expiry.
