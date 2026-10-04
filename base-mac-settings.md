@@ -45,9 +45,51 @@
 - Install Firefox, Brave, and Chrome
   - Firefox: [Download](https://www.firefox.com/)
   - System Settings > Desktop & Dock > Default web browser: select Firefox
-  - Firefox > Settings > Sync: sign in with the primary email and turn on syncing for “Settings”
   - Each browser > Settings > Search engine: set the address-bar search engine to Google
   - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
+  - Firefox > Settings > Account and sync:
+    - Personal machine: sign in with the primary email, turn on Sync (bookmarks, history, open tabs, passwords, addresses, payment methods, add-ons, settings)
+    - Work machine: do not sign in / do not sync. Set everything below by hand instead.
+  - Firefox manual settings (work machine, or any machine not using Sync):
+    - Home and startup
+      - Startup: “open previous windows and tabs” off, “open automatically on login” off
+      - Homepage + new tabs: Firefox Home (Default)
+      - Firefox Home: Search on, Weather on; Shortcuts off, Stories off, Recent activity off
+    - Search
+      - Default engine: Google; show search terms in address bar: on
+      - Suggestions: all on (general, before-history, private windows, trending); Firefox Suggest (history, bookmarks): on
+    - Privacy and security
+      - Enhanced Tracking Protection: Strict
+      - Data collection: send technical/interaction data to Mozilla — off; personalized extension recommendations — off; feature studies — off
+    - Passwords and autofill
+      - Bitwarden controls password management (see below); native save-password prompt off
+      - Require device sign-in to manage passwords: off
+      - Save/autofill payment info: off
+      - Save/autofill addresses: on
+    - Appearance
+      - Website appearance: System; window density: Automatic
+      - Browser theme: “Biscuit {Mojas84}” (custom, from addons.mozilla.org) if available, else closest default
+    - Downloads
+      - Save to Downloads, don’t ask each time
+      - Open in Firefox: AV1, JPEG XL, PDF, WebP. Save File: XML, SVG. mailto: Use Mail.
+      - Other files: automatically save
+    - Tabs and browsing
+      - Browser layout: Vertical tabs
+      - Open links in tabs not new windows: on
+      - Image preview on tab hover: on; AI tab/tab-group suggestions: on; drag tabs to create groups: on
+      - Use Container Tabs: on
+      - Ask before quitting with ⌘Q: on; ask before closing multiple tabs: off
+      - Link previews: on (AI key points: off; long-press shortcut: on)
+    - Accessibility
+      - Font family: Optima; font size: 16; website contrast override: off
+    - Languages
+      - Browser language: English (US); full page translation: on; spell check as you type: on
+    - AI controls
+      - AI enhancements: not blocked; on-device AI (translations, speech recognition, alt text, tab-group suggestions, link-preview key points): available; chatbot in sidebar: available
+    - Permissions and data
+      - Block pop-ups and third-party redirects: on; warn before installing extensions: on
+    - Firefox Labs
+      - Media: JPEG XL: on; address-bar IME and tab notes: off
 
 - Install either Bitwarden or 1Password
   - Install the desktop app
