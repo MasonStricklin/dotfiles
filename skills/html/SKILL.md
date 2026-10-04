@@ -5,7 +5,8 @@ description: Build or edit a single-file HTML page in the user's own style. Use 
 
 # html
 
-Build single-file HTML pages in the user's style. Do not ask style questions; the themer answers them.
+Build single-file HTML pages in the user's style. Generally, do not ask style questions; the themer answers them.
+When a page needs something the themer does not cover (charts, long-form text, pull quotes, images), propose the new conventions and confirm them before building.
 
 ## Style source
 
