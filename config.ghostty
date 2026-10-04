@@ -3,3 +3,4 @@ theme = Gruvbox Material Dark
 
 # Font — matches Zed's buffer font (themer.html's mono-sans token)
 font-family = DM Mono
+font-size = 18
