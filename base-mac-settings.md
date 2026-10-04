@@ -102,10 +102,12 @@
   - `theme = Gruvbox Material Dark`; `font-family = DM Mono`
 
 - Install Zed: [Download](https://zed.dev/download)
-  - Settings at `~/.config/zed/settings.json` (not yet symlinked to this repo — edited directly for now)
+  - Settings at `~/.config/zed/settings.json`, symlinked to this repo's `zed-settings.json`
   - `"buffer_font_family": "DM Mono"`; `"ui_font_size": 16`; `"buffer_font_size": 15`
   - Theme follows system mode: Gruvbox Dark / Gruvbox Light; `"base_keymap": "VSCode"`
   - AI off: `"disable_ai": true`
+
+- Shell: `~/.zshrc` and `~/.vimrc` are symlinked to this repo's copies
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
 
