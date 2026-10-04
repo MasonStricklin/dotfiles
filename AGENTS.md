@@ -97,6 +97,9 @@ Rules:
 - before revising a collection, query live entities by llm-watermark-category instead of reconstructing from chat or parallel plaintext
 - never silently remove or rewrite an existing watermark
 
+17. PORTABILITY AWARENESS
+When creating or changing a skill, agent config, repo, or project that could reasonably run across tools (Claude, Codex, …) or machines, note whether it's shared or siloed. Raise it when planning or working on it — don't let something that should be portable sit unmentioned. Don't symlink, sync, or push on your own initiative; surface it and let the user decide.
+
 # 5. CODE
 Applies to all code and code-like things.
 

@@ -90,6 +90,7 @@
       - Block pop-ups and third-party redirects: on; warn before installing extensions: on
     - Firefox Labs
       - Media: JPEG XL: on; address-bar IME and tab notes: off
+    - Extensions: Bitwarden Password Manager, uBlock Origin
 
 - Install either Bitwarden or 1Password
   - Install the desktop app
