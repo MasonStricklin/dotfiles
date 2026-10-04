@@ -161,3 +161,7 @@ Before a sweeping edit, commit a checkpoint so one command reverts it. Keep expe
 
 ## Visual decisions
 Show visual choices as previews inside the artifact itself, wrapped in clear `DISPOSABLE PREVIEW START` / `END` comments, with inline styles only. Keep the chat reply to a few lines. Delete the block once a choice is made.
+
+## Verification
+Check that third-party assets (fonts, scripts, images) actually load. A page that renders can still be showing fallbacks. When a failure would be silent, add a self-check that reports it.
+After a rewrite or comprehensive overhaul, confirm the page still shows its content, not only that no error appears.

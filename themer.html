@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kiln</title>
+    <!-- A clay disc with a cream k, as an inline SVG so the page stays one file. -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23cc6633'/><circle cx='32' cy='32' r='27' fill='none' stroke='%23141414' stroke-width='3'/><path d='M22 14V50M44 20L22 34M29 30L46 50' fill='none' stroke='%23f0e0d0' stroke-width='8' stroke-linecap='butt'/></svg>">
+
+    <!-- Web fonts. Google Fonts serves the first group in one request. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Courier+Prime:wght@400;700&family=DM+Mono:wght@400;500&family=Inter&family=Instrument+Serif&family=Gloock&family=Bricolage+Grotesque&family=Syne&family=Xanh+Mono&family=Fragment+Mono&family=Martian+Mono&family=Geist+Mono&family=Libertinus+Mono&family=Space+Mono&family=Cutive+Mono&family=Anonymous+Pro&display=swap">
+
+    <!-- Fontshare's API drops fonts when several are requested at once, so each gets its own link. -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=sentient@400,700&display=swap">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=boska@400,700&display=swap">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,700&display=swap">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700&display=swap">
+
+    <style>
+        /* =====================================================================
+           Tokens
+           ===================================================================== */
+
+        :root {
+            color-scheme: light;
+
+            /* Colors */
+            --paper: #eee5d5;
+            --ink: #141414;
+
+            /* Spacing scale. Padding sits inside a component, gap sits between
+               siblings, and a section rule has the same space (s12) above and below. */
+            --s2: 2px;
+            --s4: 4px;
+            --s8: 8px;
+            --s12: 12px;
+            --s16: 16px;
+            --s24: 24px;
+            --panel-padding: var(--s16);
+
+            /* Borders. A card has a base border, which grows to the hover width and then to
+               the selected width. Rules and focus rings use the base width, and a panel has its own. */
+            --border-base: 4px;
+            --border-hover: 8px;
+            --border-selected: 12px;
+            --border-panel: 12px;
+            /* The inside ring a card draws on hover or selection, which is the added width. */
+            --ring-hover: calc(var(--border-hover) - var(--border-base));
+            --ring-selected: calc(var(--border-selected) - var(--border-base));
+
+            /* The only corner radius on the page. A focus ring sits --ring-offset outside its element. */
+            --radius: 2px;
+            --ring-offset: 2px;
+
+            /* Type sizes */
+            --label-size: clamp(20px, 1.9vw, 28px);
+            --hue-name-size: 44px;
+            --hex-size: clamp(11px, 1.15vw, 16px);
+
+            /* Component sizes */
+            --swatch-height: 72px;
+            --sample-height: 184px; /* one height for every font sample, tall enough for tiny and huge fonts alike */
+
+            /* Fonts: primary first, then its secondary fallback. */
+            --font-sans: Optima, Inter, sans-serif;
+            --font-serif: 'EB Garamond', Georgia, serif;
+            --font-mono-sans: 'DM Mono', Menlo, monospace;
+            --font-mono-serif: 'Courier Prime', 'Courier New', monospace;
+        }
+
+        /* --accent is the selected color's primary shade, set by chooseColor(). */
+        body {
+            --accent: #cc6633;
+            --surface: color-mix(in srgb, var(--paper) 88%, var(--accent));
+        }
+
+
+        /* =====================================================================
+           Base
+           ===================================================================== */
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--accent);
+            color: var(--ink);
+            font-family: var(--font-sans);
+        }
+
+        /* Heading hierarchy:
+           kiln (h1) > fonts, colors, principles (h2) > core, extended (h3) > hue names (h4). */
+        .title {
+            margin: 0;
+            font-size: inherit;
+            line-height: 0.95;
+        }
+
+        .title.sub { font-size: 50px; }
+
+        .label {
+            font-size: var(--label-size);
+            font-weight: 700;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .row-label {
+            /* Wide fonts shrink so the name stays in its column. */
+            font-size: calc(var(--label-size) * clamp(0.6, var(--width-fit, 1), 1));
+            text-align: right;
+            translate: 0 2px; /* optical nudge so the label centers on its card's top edge */
+        }
+
+
+        /* =====================================================================
+           Panel
+           ===================================================================== */
+
+        .panel {
+            max-width: 1600px;
+            margin: var(--s24) auto;
+            padding: var(--panel-padding);
+            background: var(--surface);
+            border: var(--border-panel) solid var(--ink);
+            border-radius: var(--radius);
+
+            /* A collapsed panel is just its title band, with no padding beneath it. */
+            &:has(> .collapsible:not([open])) { padding-bottom: 0; }
+        }
+
+        /* When the selected color is core ink or one of the blacks, the page tint is nearly
+           black and the black panel borders melt into it, so each panel gets a thin cream outline. */
+        body[data-ink-background] .panel {
+            outline: var(--border-base) solid var(--surface);
+        }
+
+        /* The page title is an inverted panel with a much larger title. */
+        .hero {
+            background: var(--ink);
+            color: var(--surface);
+        }
+
+        .hero-title {
+            margin: 0 0 -0.12em; /* trims the empty space under a title with no descenders */
+            font-size: clamp(72px, 13vw, 168px);
+            line-height: 0.85;
+        }
+
+        /* Subsections are divided by a rule with the same space above and below. */
+        .sub + .sub {
+            margin-top: var(--s12);
+            padding-top: var(--s12);
+            border-top: var(--border-base) solid var(--ink);
+        }
+
+        section.sub > .title { margin-bottom: var(--s8); }
+
+
+        /* =====================================================================
+           Collapsible section titles: an inverted black band across the top of a panel.
+           The caret is a CSS triangle sized in em, so it scales with its title
+           and does not depend on any font.
+           ===================================================================== */
+
+        .collapsible > summary {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.28em;
+            margin: calc(-1 * var(--panel-padding)) calc(-1 * var(--panel-padding)) var(--s12);
+            padding: var(--s16) var(--panel-padding) var(--s24);
+            background: var(--ink);
+            color: var(--surface);
+            font-size: 64px;
+            list-style: none;
+            cursor: pointer;
+
+            &::-webkit-details-marker { display: none; }
+
+            &::before {
+                content: '';
+                position: relative;
+                top: 0.05em;
+                flex: none;
+                border-left: 0.3em solid currentColor;
+                border-block: 0.19em solid transparent;
+                transition: rotate 0.12s;
+            }
+
+            /* A band has no corners of its own, so its focus ring is drawn inside it. */
+            &:focus-visible { outline: none; box-shadow: none; }
+
+            &:focus-visible::after {
+                content: '';
+                position: absolute;
+                inset: var(--s4); /* inside the black, so it never merges with the cream panel below */
+                border: var(--border-base) solid var(--surface);
+                border-radius: calc(var(--radius) * 2);
+                pointer-events: none;
+            }
+        }
+
+        .collapsible[open] > summary::before { rotate: 90deg; }
+
+        .collapsible:not([open]) > summary { margin-bottom: 0; }
+
+
+        /* =====================================================================
+           Focus
+           A ring is ink, sits --ring-offset outside its element and is a box shadow, not an outline:
+           a browser rounds an outline far more than its element, while a shadow keeps the corner
+           barely rounded. offset + width stay under the 8px gap between cards. A color card's
+           button is not ringed itself, because its card carries the ring. A black band draws
+           its own cream ring inside (see summary), and so does the copy chip (see .copy).
+           ===================================================================== */
+
+        :focus-visible,
+        .card:has(> .card-select:focus-visible) {
+            outline: none;
+            border-radius: var(--radius);
+            box-shadow:
+                0 0 0 var(--ring-offset) var(--surface),
+                0 0 0 calc(var(--ring-offset) + var(--border-base)) var(--ink);
+        }
+
+
+        /* =====================================================================
+           Card
+           A card is a color (name, swatches, hexes) or a font sample. Hover and selection
+           thicken its border inward, to the hover and selected widths. On a font sample the
+           added width is ink. On a color card it is a cream ring just inside the ink border,
+           which shows on both swatches and the black hex row.
+           ===================================================================== */
+
+        .card {
+            position: relative;
+            border: var(--border-base) solid var(--ink);
+            border-radius: var(--radius);
+            background: rgb(248 240 224 / 0.42); /* #F8F0E0 */
+            cursor: pointer;
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border: 0 solid var(--ink);
+                pointer-events: none;
+            }
+
+            &:has(> .card-select)::after { border-color: var(--surface); }
+
+            /* The ring grows the border inward: base + ring = hover, then base + ring = selected. */
+            &:hover::after { border-width: var(--ring-hover); }
+
+            &:is([aria-pressed="true"], :has(> [aria-pressed="true"]))::after {
+                border-width: var(--ring-selected);
+            }
+
+            /* A font sample's ring is ink, so it adds to the ink border. It grows only to
+               the selected ring's width in total, matching the cream ring of a color card. */
+            &.font-sample:hover::after { border-width: calc(var(--ring-hover) / 2); }
+
+            &.font-sample[aria-pressed="true"]::after {
+                border-width: calc(var(--ring-selected) - var(--border-base));
+            }
+        }
+
+
+        /* =====================================================================
+           Color card parts
+           Primary is half the card; secondary and tertiary are a quarter each.
+           Swatches and hexes share these columns so each hex sits under its swatch.
+           ===================================================================== */
+
+        .swatches,
+        .hexes {
+            display: grid;
+            grid-template-columns: 2fr;
+            grid-auto-columns: 1fr;
+            grid-auto-flow: column;
+        }
+
+        /* The swatches are one button, so a keyboard can select the card. */
+        .card-select {
+            width: 100%;
+            height: var(--swatch-height);
+            padding: 0;
+            border: 0;
+            background: none;
+            color: inherit;
+            cursor: pointer;
+
+            &:focus-visible { outline: none; box-shadow: none; }
+        }
+
+        .hexes {
+            gap: 0 var(--s8);
+            /* The sides and bottom clear the selected ring plus a gap, so a label never touches it. */
+            padding: var(--s8) calc(var(--ring-selected) + var(--s8)) calc(var(--ring-selected) + var(--s4));
+            background: var(--ink);
+            color: var(--surface);
+            font: 500 var(--hex-size) var(--font-mono-sans);
+        }
+
+        .hex {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--s4); /* keeps a hovered copy chip off the label beneath it */
+
+            &:not(:first-child) { padding-left: var(--s4); }
+        }
+
+        .hex-label {
+            font-size: 0.7em;
+            line-height: 1.1;
+        }
+
+        /* The hex, the gap and the icon are one copy button. A negative margin cancels
+           its padding so the text stays aligned with the label beneath it. */
+        .copy {
+            display: flex;
+            align-items: center;
+            gap: var(--s4);
+            margin: calc(-1 * var(--s2)) calc(-1 * var(--s4));
+            padding: var(--s2) var(--s4);
+            border: 0;
+            border-radius: var(--radius);
+            background: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+
+            & svg {
+                translate: 0 1px; /* optical nudge so the icon centers on the text */
+                overflow: visible;
+            }
+
+            /* Hover and focus look the same: a cream chip, with text and icon thickened in place. */
+            &:focus-visible { outline: none; box-shadow: none; }
+
+            &:hover,
+            &:focus-visible {
+                background: var(--surface);
+                color: var(--ink);
+                -webkit-text-stroke: 0.4px currentColor;
+            }
+
+            &:hover svg,
+            &:focus-visible svg { stroke-width: 2.4; }
+        }
+
+
+        /* =====================================================================
+           Principles
+           ===================================================================== */
+
+        /* The subject on the left, what holds for it on the right. The columns match an extended
+           color row, so subjects line up with color names and text with the cards. */
+        .principles {
+            display: grid;
+            grid-template-columns: calc(var(--label-size) * 5) minmax(0, 1fr);
+            align-items: baseline;
+            gap: var(--s12) var(--s8);
+            margin: 0;
+            padding-left: calc(var(--hue-name-size) * 0.9 + var(--s24));
+            font-size: calc(var(--label-size) * 0.8);
+            line-height: 1.3;
+
+            & dt {
+                grid-column: 1;
+                font-weight: 700;
+                text-align: right;
+            }
+
+            & dd {
+                grid-column: 2;
+                margin: 0;
+            }
+
+            & code { font: 500 0.85em var(--font-mono-sans); }
+        }
+
+
+        /* =====================================================================
+           Fonts
+           One column per role. Core fonts are primary and secondary rows;
+           extended fonts are a stack of experimental samples.
+           ===================================================================== */
+
+        .fonts-grid {
+            display: grid;
+            grid-template-columns: calc(var(--label-size) * 8) repeat(4, minmax(0, 1fr));
+            gap: var(--s8);
+
+            & .title {
+                grid-column: 1 / -1;
+                margin-bottom: var(--s8);
+            }
+        }
+
+        .fonts-rule {
+            grid-column: 1 / -1;
+            margin-block: var(--s4);
+            border-top: var(--border-base) solid var(--ink);
+        }
+
+        /* Extended column headers: the role name on the left, sort buttons on the right. */
+        .sort-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--label-size); /* fixed, so the chosen font's line box cannot add a pixel */
+            gap: var(--s8);
+        }
+
+        .role-name {
+            flex-shrink: 0;
+            /* Wide fonts shrink so the buttons keep their room. */
+            font-size: calc(var(--label-size) * clamp(0.6, var(--width-fit, 1), 1));
+        }
+
+        .sort-header > span:not(.role-name) {
+            display: flex;
+            align-items: center;
+            gap: var(--s4);
+            /* Room for the last button's focus ring inside the column. */
+            margin-right: calc(var(--ring-offset) + var(--border-base));
+            line-height: 1; /* the chosen font's line box stays out of it */
+        }
+
+        /* Each button holds its label and a reserved arrow slot, so choosing one moves nothing. */
+        .sort {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            padding: var(--s4);
+            border: 0;
+            background: none;
+            color: inherit;
+            font: 400 calc(var(--label-size) * 0.6) / 1 var(--font-sans);
+            cursor: pointer;
+            opacity: 0.55;
+
+            &:hover, &:focus-visible, &[data-direction] { opacity: 1; }
+
+            /* An open triangle, the outline twin of the section caret. It points down for descending. */
+            &::after {
+                content: '';
+                width: 0.6em;
+                height: 0.5em;
+                background: currentColor;
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpath d='M1 1H9L5 7Z' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+                translate: 0 0.12em; /* centers it on the lowercase letters, not the line box */
+                visibility: hidden;
+            }
+
+            &[data-direction]::after { visibility: visible; }
+            &[data-direction='asc']::after { rotate: 180deg; }
+        }
+
+        /* One extended column: its header, then its cards. Tab order follows this order. */
+        .font-column {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--s8);
+        }
+
+        .font-stack {
+            display: flex;
+            flex-direction: column;
+            gap: var(--s8);
+        }
+
+        .row-label.tall { height: var(--sample-height); }
+
+        /* Level with the first card, below the column header. */
+        .experimental-label { margin-top: calc(var(--label-size) + var(--s8)); }
+
+        /* Fixed heights and hidden overflow keep tall fonts inside their cards. */
+        .font-sample {
+            height: var(--sample-height);
+            padding: var(--s12) var(--s16);
+            overflow: hidden;
+            container-type: inline-size;
+            color: inherit;
+            text-align: left;
+        }
+
+        /* Width and height relative to Optima (100), in a fixed font so it never changes size. */
+        .font-metrics {
+            display: block;
+            font: 500 var(--hex-size) / 24px var(--font-mono-sans);
+        }
+
+        .font-name {
+            display: block;
+            overflow: hidden;
+            /* One size for every name, smaller only if a card is narrow. */
+            font-size: min(calc(var(--label-size) * 0.8), 9cqw);
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* The alphabet and the style line are as large as fits on one line: 16px, or smaller
+           when the card is narrow. A fixed line height leaves room for fonts with tall letters. */
+        .font-glyphs {
+            display: block;
+            font-size: min(1em, 5.4cqw);
+            line-height: 24px;
+            white-space: nowrap;
+
+            & span { display: block; }
+
+            /* The style line is longer than the others, so it is a little smaller to fit wide fonts. */
+            & .styles { font-size: 0.88em; }
+        }
+
+
+        /* =====================================================================
+           Core colors: four single-color cards, each with its name above it.
+           ===================================================================== */
+
+        .core-cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-rows: auto auto;
+            grid-auto-flow: column;
+            gap: var(--s8);
+
+            /* No label sits under a core hex, so its hover chip needs a little more room above the ring. */
+            & .hexes { padding-bottom: calc(var(--ring-selected) + var(--s8)); }
+        }
+
+
+        /* =====================================================================
+           Extended colors: one hue per row, natural and vivid as columns.
+           ===================================================================== */
+
+        .hue {
+            display: grid;
+            grid-template-columns: calc(var(--hue-name-size) * 0.9) minmax(0, 1fr); /* one line of the hue name */
+            gap: var(--s24);
+            padding-block: var(--s12);
+
+            & + .hue { border-top: var(--border-base) solid var(--ink); }
+        }
+
+        /* The hue name reads bottom to top, level with the first card (below the natural / vivid header). */
+        .hue-name {
+            align-self: start;
+            margin: calc(var(--label-size) + var(--s8)) 0 0 calc(-1 * var(--s8));
+            writing-mode: vertical-rl;
+            rotate: 180deg;
+            font-size: var(--hue-name-size);
+            line-height: 0.9;
+        }
+
+        .hue-grid {
+            display: grid;
+            grid-template-columns: calc(var(--label-size) * 5) repeat(2, minmax(0, 1fr));
+            gap: var(--s8);
+        }
+
+
+        /* =====================================================================
+           Toast and font probe
+           ===================================================================== */
+
+        .toast {
+            position: fixed;
+            right: var(--s24);
+            bottom: var(--s24);
+            padding: var(--s12) var(--s16);
+            background: var(--surface);
+            border: var(--border-hover) solid var(--ink);
+            border-radius: var(--radius);
+            font-size: var(--hex-size);
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+
+            &.show { opacity: 1; }
+        }
+
+        /* The hidden element textWidth() measures fonts with. */
+        .font-probe {
+            position: absolute;
+            visibility: hidden;
+            font-size: 40px;
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================================
+           Responsive and motion
+           ===================================================================== */
+
+        @media (max-width: 700px) {
+            :root { --panel-padding: var(--s12); }
+            .panel { margin: var(--s16); }
+        }
+
+        @media (max-width: 520px) {
+            :root { --hue-name-size: 32px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="panel hero">
+            <h1 class="hero-title">kiln</h1>
+        </section>
+
+        <section class="panel">
+            <details class="collapsible" open>
+                <summary><h2 class="title">fonts</h2></summary>
+                <div id="fonts" class="fonts-grid"></div>
+            </details>
+        </section>
+
+        <section class="panel">
+            <details class="collapsible" open>
+                <summary><h2 class="title">colors</h2></summary>
+
+                <section class="sub">
+                    <h3 class="title sub">core</h3>
+                    <div id="core" class="core-cards"></div>
+                </section>
+
+                <section class="sub">
+                    <h3 class="title sub">extended</h3>
+                    <div id="spectrum"></div>
+                </section>
+            </details>
+        </section>
+
+        <section class="panel">
+            <details class="collapsible" open>
+                <summary><h2 class="title">principles</h2></summary>
+                <dl class="principles">
+                    <dt>fonts</dt>
+                    <dd>primary are personal favorites, secondary are safe and experimental are fun</dd>
+                    <dd>avoid what has been played out (Futura, Helvetica, Times New Roman)</dd>
+                    <dt>colors</dt>
+                    <dd>are points on four axes (hue, name, tone, shade)</dd>
+                    <dd>names are one short word from earth or nature, ordered within a family (soil, bark, nut)</dd>
+                    <dd>
+                        hexes are memorable wherever the color allows, ideally doubled <code>#AABBCC</code>,
+                        gray <code>#606060</code>, two digits <code>#EFFEEE</code> or palindrome <code>#DFEEFD</code>,
+                        and failing that round <code>#FFD0BB</code>, same last digit <code>#695949</code>
+                        or two equal channels <code>#FAF2FA</code> (these examples are not exhaustive)
+                    </dd>
+                </dl>
+            </details>
+        </section>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+
+    <script>
+        // =====================================================================
+        // Data
+        // =====================================================================
+
+        const SHADES = ['primary', 'secondary', 'tertiary'];
+        const TONES = ['natural', 'vivid'];
+
+        const CORE = [
+            ['clay', '#CC6633'],
+            ['clay ink', '#442211'],
+            ['ink', '#141414'],
+            ['white', '#FFFFFF'],
+        ];
+
+        // Extended colors: [hue, tone, name, [primary, secondary, tertiary]].
+        // Every hex is memorable wherever the color allows. These examples are not exhaustive:
+        // strong: doubled #AABBCC, gray #606060, two digits #EFFEEE, palindrome #DFEEFD;
+        // tolerable when no strong one fits: round #FFD0BB, same last digit #695949, two equal channels #FAF2FA.
+        // Pick the closest memorable hex that keeps the hue and keeps each row's primary,
+        // secondary and tertiary in dark-to-light order.
+        const EXTENDED = [
+            ['red', 'natural', 'plum', ['#662244', '#AA7799', '#EECCDD']],
+            ['red', 'natural', 'cherry', ['#992233', '#CC6677', '#EEBBCC']],
+            ['red', 'natural', 'apple', ['#BB2222', '#DD8077', '#FFD0CC']],
+            ['red', 'vivid', 'plum', ['#AA2266', '#CC6699', '#EEBBDD']],
+            ['red', 'vivid', 'cherry', ['#DD1144', '#EE7799', '#FFBBCC']],
+            ['red', 'vivid', 'apple', ['#EE3322', '#EE7766', '#FBCCBF']],
+            ['orange', 'natural', 'rust', ['#BB4411', '#DD7755', '#FFCCBB']],
+            ['orange', 'natural', 'clay', ['#CC6633', '#DD9977', '#FFD0BB']],
+            ['orange', 'natural', 'brass', ['#CC8822', '#EEAA55', '#FFDDAA']],
+            ['orange', 'vivid', 'rust', ['#DD4400', '#EE7755', '#FFD0C0']],
+            ['orange', 'vivid', 'clay', ['#EE6622', '#FF9955', '#FFCC99']],
+            ['orange', 'vivid', 'brass', ['#FFAA33', '#FFBB66', '#FFDD88']],
+            ['yellow', 'natural', 'honey', ['#AA8833', '#CCAA66', '#DDCCAA']],
+            ['yellow', 'natural', 'lemon', ['#DDCC44', '#EEDD77', '#EEEEBB']],
+            ['yellow', 'natural', 'lime', ['#BBDD44', '#DDDD77', '#EEEEAA']],
+            ['yellow', 'vivid', 'honey', ['#EEBB22', '#FFCC55', '#FFEEAA']],
+            ['yellow', 'vivid', 'lemon', ['#EEDD00', '#EEEE66', '#FFFFBB']],
+            ['yellow', 'vivid', 'lime', ['#DDFF00', '#EEFF66', '#EEFFBB']],
+            ['green', 'natural', 'olive', ['#665522', '#998855', '#DDD0AA']],
+            ['green', 'natural', 'moss', ['#556633', '#889966', '#DDDDBB']],
+            ['green', 'natural', 'pine', ['#224433', '#668877', '#BBDDCC']],
+            ['green', 'vivid', 'olive', ['#779933', '#AABB55', '#DDEEAA']],
+            ['green', 'vivid', 'moss', ['#338844', '#77BB66', '#CCEEAA']],
+            ['green', 'vivid', 'pine', ['#116644', '#44AA77', '#99DDBB']],
+            ['blue', 'natural', 'oasis', ['#336666', '#80B0AA', '#CCEEE0']],
+            ['blue', 'natural', 'lake', ['#557799', '#88BBDD', '#CCDDEE']],
+            ['blue', 'natural', 'ocean', ['#113366', '#335588', '#AABBDD']],
+            ['blue', 'vivid', 'oasis', ['#33AA99', '#66CCBB', '#BBEEDD']],
+            ['blue', 'vivid', 'lake', ['#4499CC', '#77CCEE', '#BBEEFF']],
+            ['blue', 'vivid', 'ocean', ['#002277', '#4455AA', '#99AADD']],
+            ['purple', 'natural', 'dawn', ['#444477', '#8888AA', '#DDDDFF']],
+            ['purple', 'natural', 'dusk', ['#664477', '#9988AA', '#DDD0E0']],
+            ['purple', 'natural', 'midnight', ['#331133', '#664466', '#CCBBCB']],
+            ['purple', 'vivid', 'dawn', ['#6655CC', '#9988EE', '#DDCCFF']],
+            ['purple', 'vivid', 'dusk', ['#8855BB', '#BB88DD', '#EECCFF']],
+            ['purple', 'vivid', 'midnight', ['#661166', '#AA66AA', '#EEAADD']],
+            ['brown', 'natural', 'soil', ['#331111', '#845548', '#DABBAD']],
+            ['brown', 'natural', 'bark', ['#443322', '#997755', '#DDCCBB']],
+            ['brown', 'natural', 'nut', ['#886644', '#BB9977', '#FFDDBB']],
+            ['brown', 'vivid', 'soil', ['#440000', '#885544', '#DDBBAA']],
+            ['brown', 'vivid', 'bark', ['#884400', '#CC8844', '#EECCAA']],
+            ['brown', 'vivid', 'nut', ['#BB7733', '#DD9944', '#FFDD99']],
+            ['black', 'natural', 'charcoal', ['#141414', '#303030', '#606060']],
+            ['black', 'natural', 'red charcoal', ['#220011', '#442224', '#775555']],
+            ['black', 'natural', 'orange charcoal', ['#331100', '#332211', '#695949']],
+            ['black', 'natural', 'yellow charcoal', ['#222200', '#444222', '#888866']],
+            ['black', 'natural', 'green charcoal', ['#002211', '#223322', '#556655']],
+            ['black', 'natural', 'blue charcoal', ['#112233', '#334050', '#576675']],
+            ['black', 'natural', 'purple charcoal', ['#111122', '#333040', '#666070']],
+            ['black', 'vivid', 'charcoal', ['#222222', '#445555', '#7C7878']],
+            ['black', 'vivid', 'red charcoal', ['#330000', '#552222', '#885555']],
+            ['black', 'vivid', 'orange charcoal', ['#221100', '#553322', '#886655']],
+            ['black', 'vivid', 'yellow charcoal', ['#332200', '#554411', '#887744']],
+            ['black', 'vivid', 'green charcoal', ['#002200', '#114422', '#446644']],
+            ['black', 'vivid', 'blue charcoal', ['#002244', '#335577', '#7799BB']],
+            ['black', 'vivid', 'purple charcoal', ['#221133', '#443355', '#665577']],
+            ['gray', 'natural', 'graphite', ['#777777', '#ABABAB', '#D6D6D6']],
+            ['gray', 'natural', 'red graphite', ['#886E6E', '#C0AFAF', '#E2D1D1']],
+            ['gray', 'natural', 'orange graphite', ['#998070', '#CCB0A0', '#EEDDCC']],
+            ['gray', 'natural', 'yellow graphite', ['#807766', '#C0BBA0', '#E0DDD0']],
+            ['gray', 'natural', 'green graphite', ['#7C867C', '#AFB8AF', '#D7DCD7']],
+            ['gray', 'natural', 'blue graphite', ['#B0BBC0', '#D1D1D1', '#EEEEEE']],
+            ['gray', 'natural', 'purple graphite', ['#807788', '#AAA0B0', '#CECED8']],
+            ['gray', 'vivid', 'graphite', ['#666666', '#9E9E9E', '#CCCCCC']],
+            ['gray', 'vivid', 'red graphite', ['#BB7777', '#DD9988', '#FFBBBB']],
+            ['gray', 'vivid', 'orange graphite', ['#996644', '#CCAA99', '#EECCBB']],
+            ['gray', 'vivid', 'yellow graphite', ['#887722', '#BBAA66', '#EADDAE']],
+            ['gray', 'vivid', 'green graphite', ['#778866', '#BBCCAA', '#DDEECC']],
+            ['gray', 'vivid', 'blue graphite', ['#99BBCC', '#BBDDEE', '#DFEEFD']],
+            ['gray', 'vivid', 'purple graphite', ['#886688', '#BB99BB', '#EEBBEE']],
+            ['white', 'natural', 'chalk', ['#F0F0F0', '#F6F6F6', '#FBFBFB']],
+            ['white', 'natural', 'red chalk', ['#FFEEEE', '#FFF1F1', '#FEF8F8']],
+            ['white', 'natural', 'orange chalk', ['#FFEEDD', '#FFF0E0', '#FFF8F0']],
+            ['white', 'natural', 'yellow chalk', ['#FFEECC', '#FFF0D0', '#FFFFEE']],
+            ['white', 'natural', 'green chalk', ['#F3FCF3', '#F7FAF7', '#F9FBF9']],
+            ['white', 'natural', 'blue chalk', ['#E0EEFF', '#F0F7FF', '#F7FAFF']],
+            ['white', 'natural', 'purple chalk', ['#E9E0E9', '#F8F3F8', '#FCF9FC']],
+            ['white', 'vivid', 'chalk', ['#DDDDDD', '#E8E8E8', '#F2F2F2']],
+            ['white', 'vivid', 'red chalk', ['#FFCCCC', '#FFDFDD', '#FEEFEE']],
+            ['white', 'vivid', 'orange chalk', ['#FFCCAA', '#FFDDCC', '#FFEEE0']],
+            ['white', 'vivid', 'yellow chalk', ['#EEDDAA', '#EEEECC', '#FFFFDD']],
+            ['white', 'vivid', 'green chalk', ['#DDEEBB', '#EEFFCC', '#EFFEEE']],
+            ['white', 'vivid', 'blue chalk', ['#AADDEE', '#E0F0FF', '#F0FFFF']],
+            ['white', 'vivid', 'purple chalk', ['#EECCEE', '#FFDDFF', '#FFEEFF']],
+        ].map(([hue, tone, name, hexes]) => ({ hue, tone, name, hexes }));
+
+        // Per role: primary font (and the CSS token that holds its stack), secondary fallback,
+        // generic family, and experimental fonts. The order here is the column order.
+        const FONTS = [
+            { role: 'sans', primary: 'Optima', token: '--font-sans', secondary: 'Inter', generic: 'sans-serif',
+              experimental: ['Bricolage Grotesque', 'Clash Display', 'General Sans', 'Syne'] },
+            { role: 'serif', primary: 'Garamond', token: '--font-serif', secondary: 'Georgia', generic: 'serif',
+              experimental: ['Boska', 'Gloock', 'Instrument Serif', 'Sentient'] },
+            { role: 'mono sans', primary: 'DM Mono', token: '--font-mono-sans', secondary: 'Menlo', generic: 'monospace',
+              experimental: ['Fragment Mono', 'Geist Mono', 'Martian Mono', 'Space Mono'] },
+            { role: 'mono serif', primary: 'Courier Prime', token: '--font-mono-serif', secondary: 'Courier New', generic: 'monospace',
+              experimental: ['Anonymous Pro', 'Cutive Mono', 'Libertinus Mono', 'Xanh Mono'] },
+        ];
+
+        // Every font sample shows the alphabet, the digits, then the four text styles.
+        const SAMPLE_LINES = [
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            'abcdefghijklmnopqrstuvwxyz',
+            '0123456789',
+        ];
+        const STYLE_LINE = '<b>Bold</b> <i>Italic</i> <u>Underline</u> <s>Strike</s>';
+
+        // The sort buttons on each extended column. w and h are the sizes shown on each card.
+        const SORTS = [
+            { by: 'name', text: 'a–z', label: 'name' },
+            { by: 'w', text: 'w', label: 'width' },
+            { by: 'h', text: 'h', label: 'height' },
+        ];
+
+        const COPY_ICON = '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2"/></svg>';
+
+
+        // =====================================================================
+        // Color lookup
+        // colors({ hue, tone, name, shade }) returns every color matching the given fields.
+        // e.g. colors({ hue: 'orange', tone: 'natural', shade: 'primary' }) -> primary rust, clay and brass.
+        // =====================================================================
+
+        const PALETTE = EXTENDED.flatMap(({ hue, tone, name, hexes }) =>
+            hexes.map((hex, i) => ({ hue, tone, name, shade: SHADES[i], hex })));
+
+        const colors = (query = {}) =>
+            PALETTE.filter(color => Object.entries(query).every(([key, value]) => color[key] === value));
+
+
+        // =====================================================================
+        // Helpers
+        // =====================================================================
+
+        const el = (tag, className, html = '') =>
+            Object.assign(document.createElement(tag), { className, innerHTML: html });
+
+        const unique = values => [...new Set(values)];
+
+        // One hidden element measures how wide a text is in a font.
+        const probe = el('span', 'font-probe');
+        document.body.append(probe);
+
+        const textWidth = (text, family) => {
+            probe.textContent = text;
+            probe.style.fontFamily = family;
+            return probe.offsetWidth;
+        };
+
+
+        // =====================================================================
+        // Copy to clipboard, with a toast
+        // =====================================================================
+
+        // Firefox blocks the clipboard API on local files, so fall back to a hidden textarea.
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return;
+            } catch {}
+
+            const field = Object.assign(document.createElement('textarea'), { value: text });
+            document.body.append(field);
+            field.select();
+            document.execCommand('copy');
+            field.remove();
+        }
+
+        let toastTimer;
+
+        async function copyHex(hex) {
+            await copyToClipboard(hex);
+
+            const toast = document.getElementById('toast');
+            toast.textContent = `Copied ${hex}`;
+            toast.classList.add('show');
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+        }
+
+
+        // =====================================================================
+        // Cards
+        // A color card is a div holding a button of swatches (the selector) and the hexes
+        // (copy buttons), so no button sits inside another.
+        // A font sample is a single button.
+        // =====================================================================
+
+        const swatchesHtml = hexes =>
+            hexes.map(hex => `<span style="background:${hex}"></span>`).join('');
+
+        const hexesHtml = hexes => hexes.map((hex, i) => `
+            <span class="hex">
+                <button class="copy" type="button" data-hex="${hex}" aria-label="Copy ${hex}">${hex}${COPY_ICON}</button>
+                ${hexes.length > 1 ? `<span class="hex-label">${SHADES[i]}</span>` : ''}
+            </span>`).join('');
+
+        // nearBlack marks the colors dark enough to melt into the black panel borders when selected.
+        function ColorCard(hexes, label, { nearBlack = false } = {}) {
+            const card = el('div', 'card');
+            const select = el('button', 'card-select swatches', swatchesHtml(hexes));
+
+            select.type = 'button';
+            select.setAttribute('aria-pressed', 'false');
+            select.setAttribute('aria-label', `${label} ${hexes.join(' ')}`);
+            select.dataset.accent = hexes[0];
+            if (nearBlack) select.dataset.nearBlack = '';
+
+            card.append(select, el('div', 'hexes', hexesHtml(hexes)));
+            return card;
+        }
+
+        function FontSample(name, family) {
+            const sample = el('button', 'card font-sample', `
+                <span class="font-name">${name}</span>
+                <span class="font-glyphs">
+                    ${SAMPLE_LINES.map(line => `<span>${line}</span>`).join('')}
+                    <span class="styles">${STYLE_LINE}</span>
+                </span>
+                <span class="font-metrics" aria-hidden="true"></span>`);
+
+            sample.type = 'button';
+            sample.setAttribute('aria-pressed', 'false');
+            sample.style.fontFamily = family;
+            sample.dataset.family = family;
+            return sample;
+        }
+
+
+        // =====================================================================
+        // Selection
+        // One color and one font are selected at a time. A color tints the page with
+        // its primary shade. A font restyles the page body.
+        // =====================================================================
+
+        let selectedColor;
+        let selectedFont;
+
+        function press(previous, next) {
+            previous?.setAttribute('aria-pressed', 'false');
+            next.setAttribute('aria-pressed', 'true');
+            return next;
+        }
+
+        function chooseColor(select) {
+            selectedColor = press(selectedColor, select);
+            document.body.style.setProperty('--accent', select.dataset.accent);
+            document.body.toggleAttribute('data-ink-background', 'nearBlack' in select.dataset);
+        }
+
+        function chooseFont(sample) {
+            selectedFont = press(selectedFont, sample);
+            document.body.style.fontFamily = sample.dataset.family;
+            fitWidth();
+        }
+
+        // One listener covers every card, font sample and copy button.
+        document.addEventListener('click', event => {
+            const sort = event.target.closest('.sort');
+            if (sort) return sortFonts(sort);
+
+            const copy = event.target.closest('.copy');
+            if (copy) return copyHex(copy.dataset.hex);
+
+            const card = event.target.closest('.card');
+            if (!card) return;
+
+            if (card.classList.contains('font-sample')) chooseFont(card);
+            else chooseColor(card.querySelector('.card-select'));
+        });
+
+
+        // =====================================================================
+        // Render
+        // Fonts are built column by column, so tabbing walks down each column in turn.
+        // =====================================================================
+
+        function renderFonts() {
+            const family = (name, generic) => `"${name}", ${generic}`;
+
+            const stack = (samples, role) => {
+                const node = el('div', 'font-stack');
+                if (role) node.dataset.role = role;
+                node.append(...samples);
+                return node;
+            };
+
+            const roleHeader = (role, controls = '') =>
+                el('div', 'label sort-header', `<span class="role-name">${role}</span>${controls}`);
+
+            // The list starts in name order, so a–z starts out pressed (ascending).
+            const sortButtons = role => `<span>${SORTS.map(({ by, text, label }) => `
+                <button type="button" class="sort" data-role="${role}" data-by="${by}" aria-label="sort by ${label}"
+                    ${by === 'name' ? 'data-direction="asc"' : ''}>${text}</button>`).join('')}</span>`;
+
+            const roleHeaders = () => [el('span'), ...FONTS.map(({ role }) => roleHeader(role))];
+
+            document.getElementById('fonts').append(
+                el('h3', 'title sub', 'core'),
+                ...roleHeaders(),
+                stack([
+                    el('div', 'label row-label tall', 'primary'),
+                    el('div', 'label row-label tall', 'secondary'),
+                ]),
+                ...FONTS.map(({ primary, token, secondary, generic }) => stack([
+                    FontSample(primary, `var(${token})`),
+                    FontSample(secondary, family(secondary, generic)),
+                ])),
+
+                el('div', 'fonts-rule'),
+
+                el('h3', 'title sub', 'extended'),
+                el('div', 'label row-label experimental-label', 'experimental'),
+                ...FONTS.map(({ role, experimental, generic }) => {
+                    const column = el('div', 'font-column');
+                    column.append(
+                        roleHeader(role, sortButtons(role)),
+                        stack(experimental.map(name => FontSample(name, family(name, generic))), role),
+                    );
+                    return column;
+                }),
+            );
+        }
+
+        function renderCore() {
+            document.getElementById('core').append(...CORE.flatMap(([name, hex]) => [
+                el('div', 'label', name),
+                ColorCard([hex], `core · ${name}`, { nearBlack: name === 'ink' }),
+            ]));
+        }
+
+        function renderHue(hue) {
+            const hueColors = EXTENDED.filter(color => color.hue === hue);
+            const grid = el('div', 'hue-grid', '<span></span>' + TONES.map(tone => `<div class="label">${tone}</div>`).join(''));
+
+            for (const name of unique(hueColors.map(color => color.name))) {
+                grid.append(el('div', 'label row-label', name.replace(' ', '<br>')));
+
+                for (const tone of TONES) {
+                    const color = hueColors.find(color => color.name === name && color.tone === tone);
+                    grid.append(ColorCard(color.hexes, `${hue} · ${tone} · ${name}`, { nearBlack: hue === 'black' }));
+                }
+            }
+
+            const section = el('section', 'hue', `<h4 class="title hue-name">${hue}s</h4>`);
+            section.append(grid);
+            return section;
+        }
+
+        function renderSpectrum() {
+            document.getElementById('spectrum').append(
+                ...unique(EXTENDED.map(color => color.hue)).map(renderHue),
+            );
+        }
+
+
+        // =====================================================================
+        // Font check
+        // Third-party fonts can fail silently. A loaded font renders the same width whatever
+        // fallback follows it, but a missing font falls through to the fallback. So compare a
+        // sample's width across three generic fallbacks and warn in the console if they differ.
+        // (System fonts such as Optima and Menlo can legitimately be missing on other operating systems.)
+        // =====================================================================
+
+        async function warnAboutMissingFonts() {
+            await document.fonts.ready;
+
+            const sample = 'Hamburgefonstiv WWW iii 0123';
+            const firstFamily = card => getComputedStyle(card).fontFamily.split(',')[0].replace(/["']/g, '').trim();
+            const widths = name => ['monospace', 'serif', 'sans-serif'].map(generic => textWidth(sample, `"${name}", ${generic}`));
+
+            const missing = unique([...document.querySelectorAll('.font-sample')].map(firstFamily))
+                .filter(name => new Set(widths(name)).size > 1);
+
+            if (missing.length) console.warn('These fonts did not load:', missing);
+        }
+
+
+        // =====================================================================
+        // Font metrics
+        // Each font's width and height are measured against Optima (100) and shown on its card.
+        // The same width keeps labels in their columns when a wide font is chosen.
+        // =====================================================================
+
+        const SENTENCE = 'Hamburgefonstiv Primary hexes are aesthetic and memorable';
+
+        // Wide fonts shrink the row labels and column headers by their width relative to the
+        // primary sans, so they stay in their columns.
+        function fitWidth() {
+            const chosen = getComputedStyle(document.body).fontFamily;
+            const scale = textWidth(SENTENCE, 'var(--font-sans)') / textWidth(SENTENCE, chosen);
+            document.body.style.setProperty('--width-fit', scale);
+        }
+
+        // Width is the length of the sentence; height is the x-height.
+        async function measureFonts() {
+            await document.fonts.ready;
+            const samples = [...document.querySelectorAll('.font-sample')];
+            const canvas = document.createElement('canvas').getContext('2d');
+
+            const measure = sample => {
+                const family = getComputedStyle(sample).fontFamily;
+                canvas.font = `100px ${family}`;
+                return { w: textWidth(SENTENCE, family), h: canvas.measureText('x').actualBoundingBoxAscent };
+            };
+            const base = measure(samples[0]);
+
+            for (const sample of samples) {
+                const { w, h } = measure(sample);
+                sample.dataset.w = Math.round(w / base.w * 100);
+                sample.dataset.h = Math.round(h / base.h * 100);
+                sample.querySelector('.font-metrics').textContent = `w${sample.dataset.w} h${sample.dataset.h}`;
+            }
+        }
+
+        // Sorts one extended column by name, width or height. Moving the existing cards, not
+        // rebuilding them, keeps the selected font selected.
+        async function sortFonts(button) {
+            await measured;
+            const { role, by } = button.dataset;
+            const direction = button.dataset.direction === 'asc' ? 'desc' : 'asc';
+            const stack = document.querySelector(`.font-stack[data-role="${CSS.escape(role)}"]`);
+
+            const name = sample => sample.querySelector('.font-name').textContent;
+            const compare = by === 'name'
+                ? (a, b) => name(a).localeCompare(name(b))
+                : (a, b) => a.dataset[by] - b.dataset[by];
+            stack.append(...[...stack.children].sort((a, b) => compare(a, b) * (direction === 'asc' ? 1 : -1)));
+
+            document.querySelectorAll(`.sort[data-role="${CSS.escape(role)}"]`).forEach(other => delete other.dataset.direction);
+            button.dataset.direction = direction;
+        }
+
+
+        // =====================================================================
+        // Start
+        // =====================================================================
+
+        renderFonts();
+        const measured = measureFonts();
+        renderCore();
+        renderSpectrum();
+
+        chooseFont(document.querySelector('.font-sample[data-family="var(--font-sans)"]'));
+        chooseColor(document.querySelector('.card-select'));
+
+        warnAboutMissingFonts();
+    </script>
+
+</body>
+</html>
