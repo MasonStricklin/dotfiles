@@ -1,6 +1,7 @@
 # dotfiles
 
 - `base-mac-settings.md` — setup guide for a new Mac; points to the config files below
+- `blockers.md` — Claude friction to resolve
 - `.zshrc`, `.vimrc`, `.hushlogin` — shell config, symlinked into `~`
 - `config.ghostty` — Ghostty config, symlinked to `~/.config/ghostty/config`
 - `zed-settings.json` — Zed config, symlinked to `~/.config/zed/settings.json`
