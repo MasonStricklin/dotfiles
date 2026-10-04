@@ -97,8 +97,15 @@
   - Brave, Chrome, and Firefox > Extensions: install the corresponding extension in each browser
 
 - Install Ghostty: [Download](https://ghostty.org/download)
+  - `brew install --cask font-dm-mono`
+  - Config lives at `~/.config/ghostty/config`, symlinked to this repo's `config.ghostty`
+  - `theme = Gruvbox Material Dark`; `font-family = DM Mono`
 
 - Install Zed: [Download](https://zed.dev/download)
+  - Settings at `~/.config/zed/settings.json` (not yet symlinked to this repo — edited directly for now)
+  - `"buffer_font_family": "DM Mono"`; `"ui_font_size": 16`; `"buffer_font_size": 15`
+  - Theme follows system mode: Gruvbox Dark / Gruvbox Light; `"base_keymap": "VSCode"`
+  - AI off: `"disable_ai": true`
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
 

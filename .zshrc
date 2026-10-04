@@ -3,7 +3,7 @@
 if [[ -o interactive && -z ${ZSH_GREETING_SHOWN:-} ]]; then
     zmodload zsh/datetime
     strftime -s greeting_time '%a %b %-d · %-I:%M %p' "$EPOCHSECONDS"
-    print -P -- "%F{209}✦%f %F{8}${(L)greeting_time}%f"
+    print -P -- "%F{209}✦%f %F{245}${(L)greeting_time}%f"
     export ZSH_GREETING_SHOWN=1
     unset greeting_time
 fi
