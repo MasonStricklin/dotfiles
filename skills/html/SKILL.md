@@ -5,6 +5,8 @@ description: Build or edit a single-file HTML page in the user's own style. Use 
 
 # html
 
+Why: a single HTML file is the quickest agent-friendly way to spin up an ad-hoc visual thing. Plain JS handles fairly complex visualizations, with no build step, and the file opens anywhere. Treat each page as a fast tool, not a product.
+
 Build single-file HTML pages in the user's style. Generally, do not ask style questions; the themer answers them.
 When a page needs something the themer does not cover (charts, long-form text, pull quotes, images), propose the new conventions and confirm them before building.
 
