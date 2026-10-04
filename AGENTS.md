@@ -152,3 +152,12 @@ The heavier the change, the more the user is involved.
 - Light, just do it: comments, local names, line breaks.
 - Medium, show it: method names, structure within a file.
 - Heavy, propose and wait: structure across files, contracts between layers or services, architecture, dependencies.
+
+## Naming
+Names in a set form one connected series: primary / secondary / tertiary, not base / soft / faint. Unrelated words make the reader memorize each one.
+
+## Safe edits
+Before a sweeping edit, commit a checkpoint so one command reverts it. Keep experiments in a disposable copy and apply only what is accepted.
+
+## Visual decisions
+Show visual choices as previews inside the artifact itself, wrapped in clear `DISPOSABLE PREVIEW START` / `END` comments, with inline styles only. Keep the chat reply to a few lines. Delete the block once a choice is made.
