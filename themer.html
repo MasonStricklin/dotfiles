@@ -258,14 +258,6 @@
             &:is([aria-pressed="true"], :has(> [aria-pressed="true"]))::after {
                 border-width: var(--ring-selected);
             }
-
-            /* A font sample's ring is ink, so it adds to the ink border. It grows only to
-               the selected ring's width in total, matching the cream ring of a color card. */
-            &.font-sample:hover::after { border-width: calc(var(--ring-hover) / 2); }
-
-            &.font-sample[aria-pressed="true"]::after {
-                border-width: calc(var(--ring-selected) - var(--border-base));
-            }
         }
 
 
