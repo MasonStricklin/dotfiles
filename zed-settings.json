@@ -7,7 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "diff_view_style": "split",
   "disable_ai": true,
+  "auto_install_extensions": {
+    "typst": true
+  },
   "debugger": {
     "button": false
   },
@@ -35,7 +39,8 @@
     "model_parameters": []
   },
   "git_panel": {
-    "dock": "left"
+    "dock": "left",
+    "entry_primary_click_action": "file_diff"
   },
   "when_closing_with_no_tabs": "keep_window_open",
   "telemetry": {

@@ -21,6 +21,7 @@
 - Press ⌘⇧5 > Options:
   - “Save to” > “Other Location…”: select `~/Pictures/Screenshots`
   - Turn off “Show Floating Thumbnail”
+- System Settings > Appearance: set “Appearance” to “Dark”
 - System Settings > Appearance: set “Show scroll bars” to “Always”
 - System Settings > Wallpaper: select a solid-color wallpaper
 - System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
@@ -102,12 +103,10 @@
   - `theme = Gruvbox Material Dark`; `font-family = DM Mono`
 
 - Install Zed: [Download](https://zed.dev/download)
-  - Settings at `~/.config/zed/settings.json`, symlinked to this repo's `zed-settings.json`
-  - `"buffer_font_family": "DM Mono"`; `"ui_font_size": 16`; `"buffer_font_size": 15`
-  - Theme follows system mode: Gruvbox Dark / Gruvbox Light; `"base_keymap": "VSCode"`
-  - AI off: `"disable_ai": true`
+  - All settings live in this repo's `zed-settings.json`, symlinked to `~/.config/zed/settings.json`
+  - Open code files in Zed: `brew install duti`, then run `duti default-apps.duti` from this repo; accept each macOS pop-up
 
-- Shell: `~/.zshrc` and `~/.vimrc` are symlinked to this repo's copies
+- Shell: `~/.zshrc`, `~/.vimrc`, and `~/.hushlogin` are symlinked to this repo's copies
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
 
