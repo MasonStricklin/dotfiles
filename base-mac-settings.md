@@ -139,6 +139,11 @@
   - Website appearance: System
   - Window density: Automatic
   - Browser theme: “Biscuit {Mojas84}” (custom, from addons.mozilla.org) if available, else closest default
+- Tabs and browsing
+  - Media
+    - Use Picture-in-Picture: off
+      - Keep playing videos in Picture-in-Picture when switching tabs: on (greyed out)
+    - Play DRM-controlled content: on
 - Downloads
   - Save to Downloads, don’t ask each time
   - Open in Firefox: AV1, JPEG XL, PDF, WebP. Save File: XML, SVG. mailto: Use Mail.
