@@ -8,7 +8,8 @@
 - System Settings > Desktop & Dock: set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
 - System Settings > Displays:
   - Arrangement: match physical positions and pointer transitions
-  - Resolution: match external monitors; the Mac display may differ
+  - Resolution: match external monitors
+    - The Mac display may differ
   - Main display: consider the center monitor or MacBook display
 - System Settings > Desktop & Dock: set “Dock position on screen” to “Right”
 - Finder > Home (`~`) > Pictures: create a `Screenshots` folder
@@ -23,7 +24,8 @@
   - Turn off “Show Floating Thumbnail”
 - System Settings > Appearance: set “Appearance” to “Dark”
 - System Settings > Appearance: set “Show scroll bars” to “Always”
-- System Settings > Wallpaper: select a solid-color wallpaper; get the hex color from `kiln` (use the eyedropper)
+- System Settings > Wallpaper: select a solid-color wallpaper
+  - Get the hex color from `kiln` (use the eyedropper)
 - System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
 - System Settings > Menu Bar:
   - Ensure Clock, Battery, Bluetooth, Sound, and Now Playing are shown
@@ -51,47 +53,7 @@
   - Firefox > Settings > Account and sync:
     - Personal machine: sign in with the primary email, turn on Sync (bookmarks, history, open tabs, passwords, addresses, payment methods, add-ons, settings)
     - Work machine: do not sign in / do not sync. Set everything below by hand instead.
-  - Firefox manual settings (work machine, or any machine not using Sync):
-    - Home and startup
-      - Startup: “open previous windows and tabs” off, “open automatically on login” off
-      - Homepage + new tabs: Firefox Home (Default)
-      - Firefox Home: Search on, Weather on; Shortcuts off, Stories off, Recent activity off
-    - Search
-      - Default engine: Google; show search terms in address bar: on
-      - Suggestions: all on (general, before-history, private windows, trending); Firefox Suggest (history, bookmarks): on
-    - Privacy and security
-      - Enhanced Tracking Protection: Strict
-      - Data collection: send technical/interaction data to Mozilla — off; personalized extension recommendations — off; feature studies — off
-    - Passwords and autofill
-      - Bitwarden controls password management (see below); native save-password prompt off
-      - Require device sign-in to manage passwords: off
-      - Save/autofill payment info: off
-      - Save/autofill addresses: on
-    - Appearance
-      - Website appearance: System; window density: Automatic
-      - Browser theme: “Biscuit {Mojas84}” (custom, from addons.mozilla.org) if available, else closest default
-    - Downloads
-      - Save to Downloads, don’t ask each time
-      - Open in Firefox: AV1, JPEG XL, PDF, WebP. Save File: XML, SVG. mailto: Use Mail.
-      - Other files: automatically save
-    - Tabs and browsing
-      - Browser layout: Vertical tabs
-      - Open links in tabs not new windows: on
-      - Image preview on tab hover: on; AI tab/tab-group suggestions: on; drag tabs to create groups: on
-      - Use Container Tabs: on
-      - Ask before quitting with ⌘Q: on; ask before closing multiple tabs: off
-      - Link previews: on (AI key points: off; long-press shortcut: on)
-    - Accessibility
-      - Font family: Optima; font size: 16; website contrast override: off
-    - Languages
-      - Browser language: English (US); full page translation: on; spell check as you type: on
-    - AI controls
-      - AI enhancements: not blocked; on-device AI (translations, speech recognition, alt text, tab-group suggestions, link-preview key points): available; chatbot in sidebar: available
-    - Permissions and data
-      - Block pop-ups and third-party redirects: on; warn before installing extensions: on
-    - Firefox Labs
-      - Media: JPEG XL: on; address-bar IME and tab notes: off
-    - Extensions: Bitwarden Password Manager, uBlock Origin
+  - Firefox manual settings: see “Firefox manual settings” below (work machine, or any machine not using Sync)
 
 - Install either Bitwarden or 1Password
   - Install the desktop app
@@ -100,17 +62,21 @@
 - Install Ghostty: [Download](https://ghostty.org/download)
   - `brew install --cask font-dm-mono`
   - Config lives at `~/.config/ghostty/config`, symlinked to this repo's `config.ghostty`
-  - `theme = Gruvbox Material Dark`; `font-family = DM Mono`
+  - `theme = Gruvbox Material Dark`
+  - `font-family = DM Mono`
 
 - Install Zed: [Download](https://zed.dev/download)
   - All settings live in this repo's `zed-settings.json`, symlinked to `~/.config/zed/settings.json`
-  - Open code files in Zed: `brew install duti`, then run `duti default-apps.duti` from this repo; accept each macOS pop-up
+  - Open code files in Zed: `brew install duti`, then run `duti default-apps.duti` from this repo
+    - Accept each macOS pop-up
 
 - Shell: `~/.zshrc`, `~/.vimrc`, and `~/.hushlogin` are symlinked to this repo's copies
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
 
 - Install Codex: [Desktop app setup](https://developers.openai.com/codex/app)
+  - `~/.codex/AGENTS.md` is symlinked to this repo’s `AGENTS.md`
+  - Settings: see “Codex manual settings” below (`~/.codex/config.toml` is not managed: the app rewrites it)
 
 - Install Rectangle and configure it to open at login
   - Rectangle > Settings: turn on “Green stoplight button maximizes instead of Full Screen”
@@ -127,3 +93,161 @@
 
 - Install Spotify (Personal)
   - Spotify > Settings > Startup and window behaviour: set “Open Spotify automatically after you log into the computer” to “No”
+
+## Look and feel
+
+- macOS: Dark appearance
+- Ghostty: Gruvbox Material Dark, DM Mono
+- Zed: Gruvbox Dark, DM Mono, default icons
+- Firefox: Biscuit theme, Optima
+
+## Firefox manual settings
+
+- Home and startup
+  - Startup: “open previous windows and tabs” off, “open automatically on login” off
+  - Homepage + new tabs: Firefox Home (Default)
+  - Firefox Home
+    - Search: on
+    - Weather: on
+    - Shortcuts: off
+    - Stories: off
+    - Recent activity: off
+- Search
+  - Default engine: Google
+  - Show search terms in address bar: on
+  - Suggestions
+    - General: on
+    - Before-history: on
+    - Private windows: on
+    - Trending: on
+  - Firefox Suggest
+    - History: on
+    - Bookmarks: on
+- Privacy and security
+  - Enhanced Tracking Protection: Strict
+  - Data collection
+    - Send technical/interaction data to Mozilla: off
+    - Personalized extension recommendations: off
+    - Feature studies: off
+- Passwords and autofill
+  - Bitwarden controls password management (see below)
+  - Native save-password prompt: off
+  - Require device sign-in to manage passwords: off
+  - Save/autofill payment info: off
+  - Save/autofill addresses: on
+- Appearance
+  - Website appearance: System
+  - Window density: Automatic
+  - Browser theme: “Biscuit {Mojas84}” (custom, from addons.mozilla.org) if available, else closest default
+- Downloads
+  - Save to Downloads, don’t ask each time
+  - Open in Firefox: AV1, JPEG XL, PDF, WebP. Save File: XML, SVG. mailto: Use Mail.
+  - Other files: automatically save
+- Tabs and browsing
+  - Browser layout: Vertical tabs
+  - Open links in tabs not new windows: on
+  - Image preview on tab hover: on
+  - AI tab/tab-group suggestions: on
+  - Drag tabs to create groups: on
+  - Use Container Tabs: on
+  - Ask before quitting with ⌘Q: on
+  - Ask before closing multiple tabs: off
+  - Link previews: on
+    - AI key points: off
+    - Long-press shortcut: on
+- Accessibility
+  - Font family: Optima
+  - Font size: 16
+  - Website contrast override: off
+- Languages
+  - Browser language: English (US)
+  - Full page translation: on
+  - Spell check as you type: on
+- AI controls
+  - AI enhancements: not blocked
+  - On-device AI: available
+    - Translations
+    - Speech recognition
+    - Alt text
+    - Tab-group suggestions
+    - Link-preview key points
+  - Chatbot in sidebar: available
+- Permissions and data
+  - Block pop-ups and third-party redirects: on
+  - Warn before installing extensions: on
+- Firefox Labs
+  - Media
+    - JPEG XL: on
+    - Address-bar IME and tab notes: off
+- Extensions: Bitwarden Password Manager, uBlock Origin
+- Toolbar order, left to right: Bitwarden, uBlock Origin, Downloads, Extensions, profile, VPN
+
+## Codex manual settings
+
+Settings > …
+- General
+  - Full access: on
+  - Projectless task folder: `~/Documents/ChatGPT/Projectless Tasks`
+  - Default file open destination: Zed
+  - Show in menu bar: off
+  - Confirm before closing a window: Never
+  - Default terminal location: Right
+  - Prevent sleep while running: on
+  - Compress local chat history: on
+  - Speed: Standard
+  - Suggested prompts: off
+  - Plugins: on
+  - Composer
+    - Send shortcut: Enter
+    - Follow-up behavior: Queue
+    - Plain text composer: off
+    - Show context window usage: off
+- Notifications: all off
+- Voice
+  - Voice: Arbor
+  - Screen context: on
+  - Hotkeys: off
+- Appearance
+  - Mode: dark
+  - Theme: Absolutely
+  - Accent: custom `#CC6633` (from `kiln`)
+  - Background: `#141414` (from `kiln`)
+  - Foreground: `#FFEEDD` (from `kiln`)
+  - Font: Optima
+  - Advanced
+    - UI font size: 16 px
+    - Code font size: 14 px
+    - Reduce motion: System
+    - Separate light and dark modes: off
+    - UI font style: Regular
+    - Content font: Same as UI font
+    - Code font: DM Mono
+    - Code font style: Regular
+    - Translucent sidebar: on
+    - Contrast: 10
+    - Diff markers: Color
+    - Use pointer cursors: on
+    - Dock icon: purple Codex logo
+    - Font smoothing: on
+- Configuration
+  - Approval policy: On request
+  - Sandbox: Read only
+  - Web search: Live
+  - Output detail: Low
+  - Reasoning summary: Auto
+  - Available reasoning efforts: enable every option
+- Personalization
+  - Codex memories: on
+  - Memories from tool-assisted chats: on
+- Browser
+  - Browser: on
+  - Show full URL: on
+  - Downloads location: `~/Documents/ChatGPT/Downloads`
+  - Ask where to save downloads: off
+  - History: Always ask
+  - Site tools: on
+  - Annotation screenshots: Always include
+  - Agent permissions (default): Browsing and Downloads “Requires approval”
+  - Developer mode: full CDP access on
+- Cloud computer
+  - Website approvals: Always ask
