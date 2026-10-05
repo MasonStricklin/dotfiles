@@ -61,11 +61,11 @@
 
             /* Component sizes */
             --swatch-height: 72px;
-            --sample-height: 184px; /* one height for every font sample, tall enough for tiny and huge fonts alike */
+            --sample-height: 200px; /* one height for every font sample, tall enough for tiny and huge fonts alike */
 
             /* Fonts: primary first, then its secondary fallback. */
             --font-sans: Optima, Inter, sans-serif;
-            --font-serif: 'EB Garamond', Georgia, serif;
+            --font-serif: 'EB Garamond', Palatino, 'Palatino Linotype', serif;
             --font-mono-sans: 'DM Mono', Menlo, monospace;
             --font-mono-serif: 'Courier Prime', 'Courier New', monospace;
         }
@@ -85,9 +85,10 @@
 
         body {
             margin: 0;
-            background: var(--accent);
+            /* An extended color is blocks of its three shades, and a core color is solid. */
+            background: var(--backdrop, var(--accent)) fixed;
             color: var(--ink);
-            font-family: var(--font-sans);
+            font-family: var(--font-serif);
         }
 
         /* Heading hierarchy:
@@ -126,21 +127,18 @@
             background: var(--surface);
             border: var(--border-panel) solid var(--ink);
             border-radius: var(--radius);
+            /* Dark page tints swallow the black border, so a thin cream outline sits outside it. */
+            outline: var(--border-base) solid var(--surface);
 
             /* A collapsed panel is just its title band, with no padding beneath it. */
             &:has(> .collapsible:not([open])) { padding-bottom: 0; }
-        }
-
-        /* When the selected color is core ink or one of the blacks, the page tint is nearly
-           black and the black panel borders melt into it, so each panel gets a thin cream outline. */
-        body[data-ink-background] .panel {
-            outline: var(--border-base) solid var(--surface);
         }
 
         /* The page title is an inverted panel with a much larger title. */
         .hero {
             background: var(--ink);
             color: var(--surface);
+            outline: none;
         }
 
         .hero-title {
@@ -230,27 +228,24 @@
         /* =====================================================================
            Card
            A card is a color (name, swatches, hexes) or a font sample. Hover and selection
-           thicken its border inward, to the hover and selected widths. On a font sample the
-           added width is ink. On a color card it is a cream ring just inside the ink border,
-           which shows on both swatches and the black hex row.
+           thicken its border inward, to the hover and selected widths. The added width is a
+           cream ring just inside the ink border, which shows on swatches, the black hex row,
+           and the slightly darker cream of a font sample.
            ===================================================================== */
 
         .card {
             position: relative;
             border: var(--border-base) solid var(--ink);
             border-radius: var(--radius);
-            background: rgb(248 240 224 / 0.42); /* #F8F0E0 */
             cursor: pointer;
 
             &::after {
                 content: '';
                 position: absolute;
                 inset: 0;
-                border: 0 solid var(--ink);
+                border: 0 solid var(--surface);
                 pointer-events: none;
             }
-
-            &:has(> .card-select)::after { border-color: var(--surface); }
 
             /* The ring grows the border inward: base + ring = hover, then base + ring = selected. */
             &:hover::after { border-width: var(--ring-hover); }
@@ -475,6 +470,8 @@
 
         /* Fixed heights and hidden overflow keep tall fonts inside their cards. */
         .font-sample {
+            /* Slightly darker than the page cream, so the cream hover and selected ring shows. */
+            background: color-mix(in srgb, var(--surface) 80%, var(--ink));
             height: var(--sample-height);
             padding: var(--s12) var(--s16);
             overflow: hidden;
@@ -499,12 +496,13 @@
             white-space: nowrap;
         }
 
-        /* The alphabet and the style line are as large as fits on one line: 16px, or smaller
-           when the card is narrow. A fixed line height leaves room for fonts with tall letters. */
+        /* The alphabet and the style line are as large as fits on one line: 18px, or smaller
+           when the card is narrow. The fixed card height and line height mean a late-loading font
+           can restyle the text but never move the layout. */
         .font-glyphs {
             display: block;
-            font-size: min(1em, 5.4cqw);
-            line-height: 24px;
+            font-size: min(1.125em, 5.4cqw);
+            line-height: 26px;
             white-space: nowrap;
 
             & span { display: block; }
@@ -642,23 +640,22 @@
                 <summary><h2 class="title">principles</h2></summary>
                 <dl class="principles">
                     <dt>fonts</dt>
-                    <dd>primary are personal favorites, secondary are safe, and experimental are fun</dd>
-                    <dd>avoid what has been played out (Futura, Helvetica, Times New Roman)</dd>
+                    <dd>have three categories: primary are personal preferences, secondary are safe fallbacks, and experimental are fun</dd>
+                    <dd>avoid played out fonts like Futura, Helvetica, and Times New Roman</dd>
                     <dt>colors</dt>
-                    <dd>are points on four axes (hue, name, tone, shade)</dd>
-                    <dd>names are one short word from earth or nature, ordered within a family (soil, bark, nut)</dd>
-                    <dd>
-                        hexes are memorable wherever the color allows, ideally doubled <code>#AABBCC</code>,
-                        gray <code>#606060</code>, two digits <code>#EFFEEE</code>, or palindrome <code>#DFEEFD</code>,
-                        and failing that round <code>#FFD0BB</code>, same last digit <code>#695949</code>,
-                        or two equal channels <code>#FAF2FA</code> (these examples are not exhaustive)
-                    </dd>
+                    <dd>have four axes (hue, name, tone, shade)</dd>
+                    <dd>hue is one of red, orange, yellow, green, blue, purple, brown, black, gray, or white</dd>
+                    <dd>name is a short word from earth or nature, grouped within a family (soil, bark, nut)</dd>
+                    <dd>tone is one of natural (muted, earthy) or vivid (saturated)</dd>
+                    <dd>shade is one of primary, secondary, or tertiary, going from dark to light</dd>
+                    <dd>hexes are memorable wherever the color allows, such as <code>#AABBCC</code>, <code>#606060</code>, <code>#EFFEEE</code>, or palindrome <code>#DFEEFD</code></dd>
                 </dl>
             </details>
         </section>
     </main>
 
     <div id="toast" class="toast" role="status"></div>
+
 
     <script>
         // =====================================================================
@@ -724,20 +721,20 @@
             ['brown', 'vivid', 'soil', ['#440000', '#885544', '#DDBBAA']],
             ['brown', 'vivid', 'bark', ['#884400', '#CC8844', '#EECCAA']],
             ['brown', 'vivid', 'nut', ['#BB7733', '#DD9944', '#FFDD99']],
-            ['black', 'natural', 'charcoal', ['#141414', '#303030', '#606060']],
-            ['black', 'natural', 'red charcoal', ['#220011', '#442224', '#775555']],
-            ['black', 'natural', 'orange charcoal', ['#331100', '#332211', '#695949']],
-            ['black', 'natural', 'yellow charcoal', ['#222200', '#444222', '#888866']],
-            ['black', 'natural', 'green charcoal', ['#002211', '#223322', '#556655']],
-            ['black', 'natural', 'blue charcoal', ['#112233', '#334050', '#576675']],
-            ['black', 'natural', 'purple charcoal', ['#111122', '#333040', '#666070']],
-            ['black', 'vivid', 'charcoal', ['#222222', '#445555', '#7C7878']],
-            ['black', 'vivid', 'red charcoal', ['#330000', '#552222', '#885555']],
-            ['black', 'vivid', 'orange charcoal', ['#221100', '#553322', '#886655']],
-            ['black', 'vivid', 'yellow charcoal', ['#332200', '#554411', '#887744']],
-            ['black', 'vivid', 'green charcoal', ['#002200', '#114422', '#446644']],
-            ['black', 'vivid', 'blue charcoal', ['#002244', '#335577', '#7799BB']],
-            ['black', 'vivid', 'purple charcoal', ['#221133', '#443355', '#665577']],
+            ['black', 'natural', 'ink', ['#141414', '#303030', '#606060']],
+            ['black', 'natural', 'red ink', ['#220011', '#442224', '#775555']],
+            ['black', 'natural', 'orange ink', ['#331100', '#332211', '#695949']],
+            ['black', 'natural', 'yellow ink', ['#222200', '#444222', '#888866']],
+            ['black', 'natural', 'green ink', ['#002211', '#223322', '#556655']],
+            ['black', 'natural', 'blue ink', ['#112233', '#334050', '#576675']],
+            ['black', 'natural', 'purple ink', ['#111122', '#333040', '#666070']],
+            ['black', 'vivid', 'ink', ['#222222', '#445555', '#7C7878']],
+            ['black', 'vivid', 'red ink', ['#330000', '#552222', '#885555']],
+            ['black', 'vivid', 'orange ink', ['#221100', '#553322', '#886655']],
+            ['black', 'vivid', 'yellow ink', ['#332200', '#554411', '#887744']],
+            ['black', 'vivid', 'green ink', ['#002200', '#114422', '#446644']],
+            ['black', 'vivid', 'blue ink', ['#002244', '#335577', '#7799BB']],
+            ['black', 'vivid', 'purple ink', ['#221133', '#443355', '#665577']],
             ['gray', 'natural', 'graphite', ['#777777', '#ABABAB', '#D6D6D6']],
             ['gray', 'natural', 'red graphite', ['#886E6E', '#C0AFAF', '#E2D1D1']],
             ['gray', 'natural', 'orange graphite', ['#998070', '#CCB0A0', '#EEDDCC']],
@@ -771,14 +768,14 @@
         // Per role: primary font (and the CSS token that holds its stack), secondary fallback,
         // generic family, and experimental fonts. The order here is the column order.
         const FONTS = [
+            { role: 'serif', primary: 'EB Garamond', token: '--font-serif', secondary: 'Palatino', generic: 'serif',
+              experimental: ['Boska', 'Gloock', 'Instrument Serif', 'Sentient'] },
             { role: 'sans', primary: 'Optima', token: '--font-sans', secondary: 'Inter', generic: 'sans-serif',
               experimental: ['Bricolage Grotesque', 'Clash Display', 'General Sans', 'Syne'] },
-            { role: 'serif', primary: 'Garamond', token: '--font-serif', secondary: 'Georgia', generic: 'serif',
-              experimental: ['Boska', 'Gloock', 'Instrument Serif', 'Sentient'] },
-            { role: 'mono sans', primary: 'DM Mono', token: '--font-mono-sans', secondary: 'Menlo', generic: 'monospace',
-              experimental: ['Fragment Mono', 'Geist Mono', 'Martian Mono', 'Space Mono'] },
             { role: 'mono serif', primary: 'Courier Prime', token: '--font-mono-serif', secondary: 'Courier New', generic: 'monospace',
               experimental: ['Anonymous Pro', 'Cutive Mono', 'Libertinus Mono', 'Xanh Mono'] },
+            { role: 'mono sans', primary: 'DM Mono', token: '--font-mono-sans', secondary: 'Menlo', generic: 'monospace',
+              experimental: ['Fragment Mono', 'Geist Mono', 'Martian Mono', 'Space Mono'] },
         ];
 
         // Every font sample shows the alphabet, the digits, then the four text styles.
@@ -797,19 +794,6 @@
         ];
 
         const COPY_ICON = '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M11 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2"/></svg>';
-
-
-        // =====================================================================
-        // Color lookup
-        // colors({ hue, tone, name, shade }) returns every color matching the given fields.
-        // e.g. colors({ hue: 'orange', tone: 'natural', shade: 'primary' }) -> primary rust, clay and brass.
-        // =====================================================================
-
-        const PALETTE = EXTENDED.flatMap(({ hue, tone, name, hexes }) =>
-            hexes.map((hex, i) => ({ hue, tone, name, shade: SHADES[i], hex })));
-
-        const colors = (query = {}) =>
-            PALETTE.filter(color => Object.entries(query).every(([key, value]) => color[key] === value));
 
 
         // =====================================================================
@@ -880,8 +864,7 @@
                 ${hexes.length > 1 ? `<span class="hex-label">${SHADES[i]}</span>` : ''}
             </span>`).join('');
 
-        // nearBlack marks the colors dark enough to melt into the black panel borders when selected.
-        function ColorCard(hexes, label, { nearBlack = false } = {}) {
+        function ColorCard(hexes, label) {
             const card = el('div', 'card');
             const select = el('button', 'card-select swatches', swatchesHtml(hexes));
 
@@ -889,7 +872,7 @@
             select.setAttribute('aria-pressed', 'false');
             select.setAttribute('aria-label', `${label} ${hexes.join(' ')}`);
             select.dataset.accent = hexes[0];
-            if (nearBlack) select.dataset.nearBlack = '';
+            select.dataset.hexes = hexes.join(' ');
 
             card.append(select, el('div', 'hexes', hexesHtml(hexes)));
             return card;
@@ -930,7 +913,11 @@
         function chooseColor(select) {
             selectedColor = press(selectedColor, select);
             document.body.style.setProperty('--accent', select.dataset.accent);
-            document.body.toggleAttribute('data-ink-background', 'nearBlack' in select.dataset);
+
+            const [primary, secondary, tertiary] = select.dataset.hexes.split(' ');
+            if (tertiary) document.body.style.setProperty('--backdrop',
+                `linear-gradient(${primary} 50%, ${secondary} 50% 75%, ${tertiary} 75%)`);
+            else document.body.style.removeProperty('--backdrop');
         }
 
         function chooseFont(sample) {
@@ -1010,7 +997,7 @@
         function renderCore() {
             document.getElementById('core').append(...CORE.flatMap(([name, hex]) => [
                 el('div', 'label', name),
-                ColorCard([hex], `core · ${name}`, { nearBlack: name === 'ink' }),
+                ColorCard([hex], `core · ${name}`),
             ]));
         }
 
@@ -1023,7 +1010,7 @@
 
                 for (const tone of TONES) {
                     const color = hueColors.find(color => color.name === name && color.tone === tone);
-                    grid.append(ColorCard(color.hexes, `${hue} · ${tone} · ${name}`, { nearBlack: hue === 'black' }));
+                    grid.append(ColorCard(color.hexes, `${hue} · ${tone} · ${name}`));
                 }
             }
 
@@ -1126,7 +1113,7 @@
         renderCore();
         renderSpectrum();
 
-        chooseFont(document.querySelector('.font-sample[data-family="var(--font-sans)"]'));
+        chooseFont(document.querySelector('.font-sample[data-family="var(--font-serif)"]'));
         chooseColor(document.querySelector('.card-select'));
 
         warnAboutMissingFonts();

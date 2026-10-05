@@ -23,7 +23,7 @@
   - Turn off “Show Floating Thumbnail”
 - System Settings > Appearance: set “Appearance” to “Dark”
 - System Settings > Appearance: set “Show scroll bars” to “Always”
-- System Settings > Wallpaper: select a solid-color wallpaper
+- System Settings > Wallpaper: select a solid-color wallpaper; get the hex color from `kiln` (use the eyedropper)
 - System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
 - System Settings > Menu Bar:
   - Ensure Clock, Battery, Bluetooth, Sound, and Now Playing are shown

@@ -1,6 +1,6 @@
 ---
 name: html
-description: Build or edit a single-file HTML page in the user's own style. Use for any standalone .html page, tool or artifact. Pulls colors, fonts and principles from the themer and checks the result in headless Chrome.
+description: Build or edit a single-file HTML page in the user's own style. Use for any standalone .html page, tool or artifact. Pulls colors, fonts and principles from the kiln and checks the result in headless Chrome.
 ---
 
 # html
@@ -9,25 +9,25 @@ Why: a single HTML file is the quickest agent-friendly way to spin up an ad-hoc 
 
 Fast to build is not an excuse for sloppy code. Code quality still matters, and the page must stay lightweight: no repeated work per item (N+1 lookups, a fetch or a layout read inside a loop), no needless re-renders, no heavy libraries where a few lines of JS will do.
 
-Build single-file HTML pages in the user's style. Generally, do not ask style questions; the themer answers them.
-When a page needs something the themer does not cover (charts, long-form text, pull quotes, images), propose the new conventions and confirm them before building.
+Build single-file HTML pages in the user's style. Generally, do not ask style questions; the kiln answers them.
+When a page needs something the kiln does not cover (charts, long-form text, pull quotes, images), propose the new conventions and confirm them before building.
 
 ## Style source
 
-The themer is the style guide: `~/Documents/code/dotfiles/themer.html`. Read it before building.
+The kiln is the style guide: `~/Documents/code/dotfiles/kiln.html`. Read it before building.
 
 - **Colors**: `CORE` (clay `#CC6633`, clay ink `#442211`, ink `#141414`, white) and `EXTENDED` (hue, tone, name, shades) in the script. The page paper is `--paper` in the CSS tokens.
 - **Fonts**: the `FONTS` table and the `--font-*` tokens.
 - **Principles**: the `principles` section at the bottom of the page.
 
 Defaults when the request names nothing:
-- Fonts: primary (Optima, Garamond, DM Mono, Courier Prime), falling back to secondary (Inter, Georgia, Menlo, Courier New). Experimental fonts only when asked.
+- Fonts: primary (Optima, EB Garamond, DM Mono, Courier Prime), falling back to secondary (Inter, Palatino, Menlo, Courier New). Experimental fonts only when asked.
 - Colors: clay accent, ink text and borders, paper background. Natural tones for extra colors; vivid only as accents.
-- New hexes: memorable, per the conventions in the themer's principles.
+- New hexes: memorable, per the conventions in the kiln's principles.
 
 ## Structure
 
-Patterns the themer is built on. Reuse what fits; leave out what the page does not need.
+Patterns the kiln is built on. Reuse what fits; leave out what the page does not need.
 
 - **Tokens**: everything on `:root`. A spacing scale (`--s2` to `--s24`), border widths that form a series (base, hover, selected), one corner radius, one focus-ring offset.
 - **Panels**: an ink border around a paper panel, titled by an inverted ink band. Collapsible with `<details>`.
