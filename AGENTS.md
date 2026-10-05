@@ -172,6 +172,10 @@ After a rewrite or comprehensive overhaul, confirm the page still shows its cont
 ## Commits and pull requests
 Atomic commits, stacked into one isolated pull request.
 
+### When
+- Draft and iterate without committing; commit only when asked, once a chunk of work is reasonable
+- Push only when asked; pushing is its own action
+
 ### Commit
 - Subject: `type: description`
   - Types: feat, fix, docs, refactor, chore
