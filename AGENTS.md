@@ -168,3 +168,22 @@ Show visual choices as previews inside the artifact itself, wrapped in clear `DI
 ## Verification
 Check that third-party assets (fonts, scripts, images) actually load. A page that renders can still be showing fallbacks. When a failure would be silent, add a self-check that reports it.
 After a rewrite or comprehensive overhaul, confirm the page still shows its content, not only that no error appears.
+
+## Commits and pull requests
+Atomic commits, stacked into one isolated pull request.
+
+### Commit
+- Subject: `type: description`
+  - Types: feat, fix, docs, refactor, chore
+  - Imperative mood, no period, 50 characters or fewer
+- Body (optional): why the change was made
+- Scope: one logical change; the code works after it
+
+### Pull request
+- Scope: a stack of commits that makes one feature, modification, or fix
+- Title: same format as a commit subject
+- Description:
+  - What changed and why
+  - How it was verified
+  - Link issues with `Closes #<issue>`
+- Merge: squash, so the title becomes the commit subject on the main branch
