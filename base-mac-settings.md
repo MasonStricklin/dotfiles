@@ -209,11 +209,8 @@ Settings > …
   - Hotkeys: off
 - Appearance
   - Mode: dark
-  - Theme: Absolutely
-  - Accent: custom `#CC6633` (from `kiln`)
-  - Background: `#141414` (from `kiln`)
-  - Foreground: `#FFEEDD` (from `kiln`)
-  - Font: Optima
+  - Theme: Absolutely (default; leave accent, background, and foreground at the theme's values)
+  - Font: System
   - Advanced
     - UI font size: 16 px
     - Code font size: 14 px
