@@ -1,32 +1,16 @@
 ## macOS settings
 
-- System Settings > Desktop & Dock > Mission Control > Hot Corners…: disable all four hot corners
-- System Settings > Mouse:
-  - Turn off “Natural scrolling”
-  - Set “Tracking speed” to one or two ticks below maximum
-- System Settings > Desktop & Dock > Windows: turn on “Hold ⌥ key while dragging windows to tile”
-- System Settings > Desktop & Dock: set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
 - System Settings > Displays:
   - Arrangement: match physical positions and pointer transitions
   - Resolution: match external monitors
     - The Mac display may differ
   - Main display: consider the center monitor or MacBook display
-- System Settings > Desktop & Dock: set “Dock position on screen” to “Right”
-- Finder > Home (`~`) > Pictures: create a `Screenshots` folder
-  - Control-click `Screenshots` > Customize Folder…: add the picture symbol
-- Physical Dock:
-  - Add Downloads, Home (`~`), and Screenshots below the divider, ordered top to bottom
-  - Control-click each folder > “Display as” > “Folder”
-  - Control-click Home (`~`) > “Sort by” > “Name”
-  - Control-click Downloads and Screenshots > “Sort by” > “Date Created”
-- Press ⌘⇧5 > Options:
-  - “Save to” > “Other Location…”: select `~/Pictures/Screenshots`
-  - Turn off “Show Floating Thumbnail”
-- System Settings > Appearance: set “Appearance” to “Dark”
-- System Settings > Appearance: set “Show scroll bars” to “Always”
 - System Settings > Wallpaper: select a solid-color wallpaper
   - Get the hex color from `kiln` (use the eyedropper)
-- System Settings > Appearance: set “Folder color” to a custom color that matches the solid-color wallpaper
+- System Settings > Appearance:
+  - Set “Appearance” to “Dark”
+  - Set “Show scroll bars” to “Always”
+  - Set “Folder color” to a custom color that matches the solid-color wallpaper
 - System Settings > Menu Bar:
   - Ensure Clock, Battery, Bluetooth, Sound, and Now Playing are shown
   - Set Sound and Now Playing to “Always Show”
@@ -39,9 +23,38 @@
   - Menu Bar > Add Controls…: remove all controls (out of protest)
   - [Suggested] Reorder menu bar items by holding ⌘ while dragging, from left to right: company VPN/company-specific app, Rectangle, Bluetooth, Wi-Fi, Sound, Now Playing, Battery
   - [Suggested] “Allow in the Menu Bar” > installed-app controls: show only the company VPN/company-specific app and Rectangle
-- System Settings > Users & Groups > click ⓘ next to the user > click the profile picture: choose “Emoji,” select a standard emoji, and set a solid-color background
+- System Settings > Desktop & Dock:
+  - Mission Control > Hot Corners…: disable all four hot corners
+  - Windows: turn on “Hold ⌥ key while dragging windows to tile”
+  - Set “Click wallpaper to reveal desktop” to “Only in Stage Manager”
+  - Set “Dock position on screen” to “Right”
+- System Settings > Mouse:
+  - Turn off “Natural scrolling”
+  - Set “Tracking speed” to one or two ticks below maximum
 - System Settings > Touch ID & Password: add both index fingers
-- Finder > Settings > Advanced: turn on “Show all filename extensions”
+- System Settings > Users & Groups > click ⓘ next to the user > click the profile picture: choose “Emoji,” select a standard emoji, and set a solid-color background
+- Finder:
+  - View menu:
+    - Choose “as Columns”
+    - Show Tab Bar: off
+    - Show Sidebar, Show Preview, Show Toolbar, Show Path Bar, Show Status Bar: all on
+    - Customize Toolbar…: keep the view modes, group/sort, and actions (•••) only
+  - Settings > General:
+    - Show these items on the desktop: turn on Hard disks, External disks, CDs, DVDs, and iPods, and Connected servers
+    - Set “New Finder windows show” to the home folder
+    - Turn on “Open folders in tabs instead of new windows”
+  - Settings > Sidebar: turn off Movies, Music, Pictures, and Recent Tags
+  - Settings > Advanced: turn on “Show all filename extensions”
+  - Create the folder `~/Pictures/Screenshots`
+    - Control-click `~/Pictures/Screenshots` > Customize Folder…: add the picture symbol
+- Physical Dock:
+  - Add `~/Downloads`, `~`, and `~/Pictures/Screenshots` below the divider, ordered top to bottom
+  - Control-click each folder > “Display as” > “Folder”
+  - Control-click `~` > “Sort by” > “Name”
+  - Control-click `~/Downloads` and `~/Pictures/Screenshots` > “Sort by” > “Date Created”
+- Press ⌘⇧5 > Options:
+  - “Save to” > “Other Location…”: select `~/Pictures/Screenshots`
+  - Turn off “Show Floating Thumbnail”
 
 ## Software
 
@@ -51,9 +64,10 @@
   - Each browser > Settings > Search engine: set the address-bar search engine to Google
   - Each browser > Help: enable “Warn Before Quitting” (⌘Q) where supported
   - Firefox > Settings > Account and sync:
-    - Personal machine: sign in with the primary email, turn on Sync (bookmarks, history, open tabs, passwords, addresses, payment methods, add-ons, settings)
-    - Work machine: do not sign in / do not sync. Set everything below by hand instead.
-  - Firefox manual settings: see “Firefox manual settings” below (work machine, or any machine not using Sync)
+    - Personal machine: sign in with the primary email and turn on Sync
+      - Sync covers: bookmarks, history, open tabs, passwords, addresses, payment methods, add-ons, settings
+      - Then check each section of “Firefox manual settings” below; set by hand whatever did not sync
+    - Work machine: do not sign in; set everything in “Firefox manual settings” below by hand
 
 - Install either Bitwarden or 1Password
   - Install the desktop app
@@ -66,6 +80,7 @@
   - `font-family = DM Mono`
 
 - Install Zed: [Download](https://zed.dev/download)
+  - Look: Gruvbox Dark, DM Mono, default icons
   - All settings live in this repo's `zed-settings.json`, symlinked to `~/.config/zed/settings.json`
   - Open code files in Zed: `brew install duti`, then run `duti default-apps.duti` from this repo
     - Accept each macOS pop-up
@@ -73,9 +88,10 @@
 - Shell: `~/.zshrc`, `~/.vimrc`, and `~/.hushlogin` are symlinked to this repo's copies
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
+  - Instructions and skills: link per this repo's README, "Sync a machine"
 
 - Install Codex: [Desktop app setup](https://developers.openai.com/codex/app)
-  - `~/.codex/AGENTS.md` is symlinked to this repo’s `AGENTS.md`
+  - Instructions and skills: link per this repo's README, "Sync a machine"
   - Settings: see “Codex manual settings” below (`~/.codex/config.toml` is not managed: the app rewrites it)
 
 - Install Rectangle and configure it to open at login
@@ -96,6 +112,8 @@
 
 ## Look and feel
 
+Index only; each app's own section holds the same settings.
+
 - macOS: Dark appearance
 - Ghostty: Gruvbox Material Dark, DM Mono
 - Zed: Gruvbox Dark, DM Mono, default icons
@@ -103,89 +121,141 @@
 
 ## Firefox manual settings
 
+- Left sidebar: if Firefox displays the left-hand sidebar, right-click it and choose hide
+- Bookmarks toolbar (below the `launch` folder)
+  - Claude Usage: `https://claude.ai/new#settings/usage`
+  - ChatGPT Usage: `https://chatgpt.com/settings/usage`
+- Account and sync
+  - Syncing: on
+  - Backup: off
 - Home and startup
-  - Startup: “open previous windows and tabs” off, “open automatically on login” off
-  - Homepage + new tabs: Firefox Home (Default)
+  - Default browser: Firefox
+  - Startup
+    - Open previous windows and tabs: on
+    - Open Firefox automatically when your computer starts up: off
+    - Always check if Firefox is your default browser: off
+  - Homepage: new windows and new tabs both Firefox Home (Default)
   - Firefox Home
     - Search: on
-    - Weather: on
+    - Weather: off
     - Shortcuts: off
     - Stories: off
+    - Support Firefox: off
     - Recent activity: off
+    - Firefox logo: off
 - Search
-  - Default engine: Google
-  - Show search terms in address bar: on
-  - Suggestions
-    - General: on
-    - Before-history: on
-    - Private windows: on
-    - Trending: on
-  - Firefox Suggest
-    - History: on
-    - Bookmarks: on
+  - Default search engine: Google
+  - Show search terms in address bar on results pages: on
 - Privacy and security
   - Enhanced Tracking Protection: Strict
-  - Data collection
-    - Send technical/interaction data to Mozilla: off
-    - Personalized extension recommendations: off
-    - Feature studies: off
+  - Clear cookies and site data every time you close Firefox: off
+  - History: Remember history
+  - Tell websites not to sell or share my data: on
+  - Suggest Firefox Relay email masks: on
+  - DNS over HTTPS: Default protection
+  - Connection and software security: default
 - Passwords and autofill
-  - Bitwarden controls password management (see below)
-  - Native save-password prompt: off
-  - Require device sign-in to manage passwords: off
-  - Save/autofill payment info: off
-  - Save/autofill addresses: on
+  - Bitwarden controls password management
+    - Ask to save passwords: off
+    - Require device sign-in to manage passwords: off
+    - Primary password: not set
+    - Alerts about breached websites: off
+  - Payment methods
+    - Save and autofill payment info: off
+  - Addresses
+    - Save and autofill addresses: on
 - Appearance
   - Website appearance: System
-  - Window density: Automatic
   - Browser theme: “Biscuit {Mojas84}” (custom, from addons.mozilla.org) if available, else closest default
-- Tabs and browsing
-  - Media
-    - Use Picture-in-Picture: off
-      - Keep playing videos in Picture-in-Picture when switching tabs: on (greyed out)
-    - Play DRM-controlled content: on
+  - Window density: Automatic
 - Downloads
-  - Save to Downloads, don’t ask each time
-  - Open in Firefox: AV1, JPEG XL, PDF, WebP. Save File: XML, SVG. mailto: Use Mail.
+  - Save files to: `~/Downloads`
+  - Ask where to save files before downloading: off
+  - Delete private window downloads on close: off
+  - Open in Firefox: AVIF, JPEG XL, PDF, WebP, XML, SVG
+  - mailto: Always ask
   - Other files: automatically save
 - Tabs and browsing
-  - Browser layout: Vertical tabs
-  - Open links in tabs not new windows: on
-  - Image preview on tab hover: on
-  - AI tab/tab-group suggestions: on
-  - Drag tabs to create groups: on
-  - Use Container Tabs: on
-  - Ask before quitting with ⌘Q: on
-  - Ask before closing multiple tabs: off
-  - Link previews: on
-    - AI key points: off
-    - Long-press shortcut: on
+  - Browser layout: Horizontal tabs
+  - Tabs
+    - Opening
+      - Open links in tabs instead of new windows: on
+      - Switch immediately to new tabs opened from links or media: off
+      - Open links from apps next to your active tab: off
+    - Interaction
+      - Ctrl+Tab cycles through tabs in recently used order: off
+      - Show image preview on tab hover: on
+      - Use AI to suggest tabs and tab-group names: on
+      - Drag tabs together to create tab groups: on
+    - Containers
+      - Use Container Tabs: on
+    - Closing
+      - Ask before closing multiple tabs: off
+      - Ask before quitting with ⌘Q: on
+  - Page navigation
+    - Always use the cursor keys to navigate within pages: off
+    - Search for text when you start typing: off
+    - Enable link previews: on
+      - AI key points: off
+      - Long-press shortcut: on
+  - Media
+    - Use Picture-in-Picture: off
+      - Keep playing videos in Picture-in-Picture when switching tabs: off (greyed out)
+    - Play DRM-controlled content: on
+  - Performance: use recommended performance settings: on
+  - Recommendations
+    - Recommend extensions as you browse: on
+    - Recommend features as you browse: on
 - Accessibility
+  - Default zoom: 100%
+  - Zoom text only: off
   - Font family: Optima
   - Font size: 16
-  - Website contrast override: off
+  - Override colors: Off
+  - Keyboard navigation and scrolling
+    - Use the tab key to move focus between form controls and links: on
+    - Control media via keyboard, headset, or virtual interface: on
+    - Use autoscrolling: on
+  - Always underline links: off
+  - Use smooth scrolling: off
 - Languages
   - Browser language: English (US)
-  - Full page translation: on
-  - Spell check as you type: on
+  - Website languages: English (United States) [en-us], English [en]
+  - Offer full page translation: on
+  - Check your spelling as you type: on
 - AI controls
-  - AI enhancements: not blocked
-  - On-device AI: available
+  - Block AI enhancements: off
+  - On-device AI: all Available
     - Translations
     - Speech recognition
-    - Alt text
-    - Tab-group suggestions
-    - Link-preview key points
-  - Chatbot in sidebar: available
+    - Image alt text in Firefox PDF viewer
+    - Tab group suggestions
+    - Key points in link previews
+  - Chatbot in sidebar: Available
 - Permissions and data
+  - Permissions (Location, Camera, Microphone, Notifications, etc.): leave default; set as needed when a site asks
   - Block pop-ups and third-party redirects: on
-  - Warn before installing extensions: on
+  - Show warning when websites try to install extensions: on
+  - Firefox data collection and use
+    - Send technical and interaction data to Mozilla: off
+    - Allow personalized extension recommendations: off
+    - Allow Firefox to run feature studies: off
+    - Allow Firefox to improve features, performance, and stability between updates: on
+    - Send daily usage ping to Mozilla: off
+    - Automatically send crash reports: off
 - Firefox Labs
-  - Media
-    - JPEG XL: on
-    - Address-bar IME and tab notes: off
+  - Address Bar: show results during IME composition: off
+  - Tab notes: off
+  - Media: JPEG XL: on
 - Extensions: Bitwarden Password Manager, uBlock Origin
 - Toolbar order, left to right: Bitwarden, uBlock Origin, Downloads, Extensions, profile, VPN
+- Bookmarks toolbar visibility: hidden (View > Toolbars > Bookmarks Toolbar > Never Show); show it by hand when needed
+- Bookmarks toolbar: one folder, `launch`, containing, in order:
+  - inbox: `http://mail.google.com/`
+  - calendar: `https://calendar.google.com/calendar/u/0/r`
+  - todo: Notion TODO page
+  - list: Notion List page
+  - chat: `https://chatgpt.com/`
 
 ## Codex manual settings
 

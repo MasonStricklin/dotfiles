@@ -35,6 +35,7 @@ alias vimrc="cd ~ && vim .vimrc"
 alias home="cd ~"
 alias root="cd /"
 alias code="cd ~/Documents/Code"
+alias cg="cd ~/Documents/ChatGPT"
 
 # Files — ls includes dotfiles; rmi recursively deletes with confirmation
 # Ordinary rm keeps its standard behavior.
