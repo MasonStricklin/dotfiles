@@ -40,7 +40,7 @@
     - Show Sidebar, Show Preview, Show Toolbar, Show Path Bar, Show Status Bar: all on
     - Customize Toolbar…: keep the view modes, group/sort, and actions (•••) only
   - Settings > General:
-    - Show these items on the desktop: turn on Hard disks, External disks, CDs, DVDs, and iPods, and Connected servers
+    - Show these items on the desktop: turn off Hard disks; turn on External disks, CDs, DVDs, and iPods, and Connected servers
     - Set “New Finder windows show” to the home folder
     - Turn on “Open folders in tabs instead of new windows”
   - Settings > Sidebar: turn off Movies, Music, Pictures, and Recent Tags
