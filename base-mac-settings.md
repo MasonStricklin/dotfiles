@@ -88,6 +88,7 @@
 - Shell: `~/.zshrc`, `~/.vimrc`, and `~/.hushlogin` are symlinked to this repo's copies
 
 - Install Claude Code CLI: [Installation instructions](https://code.claude.com/docs/en/setup)
+  - Voice dictation: run `/voice tap` to enable [tap mode](https://code.claude.com/docs/en/voice-dictation#tap-to-record-and-send)
   - Instructions and skills: link per this repo's README, "Sync a machine"
 
 - Install Codex: [Desktop app setup](https://developers.openai.com/codex/app)
