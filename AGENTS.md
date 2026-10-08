@@ -183,6 +183,8 @@ Atomic commits, stacked into one isolated pull request.
 - Already on a non-main branch in the first group: stop and tell the user before committing.
 
 ### When
+- Commits, pushes, and repository creation are the user's decisions, never agent judgment
+- Never run `git init`, add a remote, or otherwise turn a folder into a repository unless asked. A folder without `.git` is a local project by choice
 - Draft and iterate without committing; commit only when asked, once a chunk of work is reasonable
 - Push only when asked; pushing is its own action
 
