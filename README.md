@@ -39,4 +39,5 @@ Why: Claude CLI (terminal and Zed) and Codex share one instruction file and one 
 2. Link every file under Files to its target; create missing links, repoint wrong ones.
 3. Link every `skills/<name>/` into each installed agent's skills directory.
 4. Find this machine's actual paths; don't assume they match the ones above.
-5. Report each link added or fixed.
+5. Confirm every target above is a symlink into this repo, and report any regular config file sitting beside one; it is either adopted here or deliberately left out.
+6. Report each link added or fixed.
