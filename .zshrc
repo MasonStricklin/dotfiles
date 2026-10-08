@@ -72,5 +72,40 @@ for highlighting_file in \
 done
 unset highlighting_file
 
+# Claude Code: give each new session the next free prompt-bar color (ROYGBIV order)
+claude() {
+  local dir=~/.claude/session-colors
+  # /color has no indigo; purple stands in for violet. pink/cyan are overflow.
+  local pool=(red orange yellow green blue purple pink cyan)
+  local color f pid used=()
+
+  mkdir -p "$dir"
+  for f in "$dir"/*(N); do
+    pid=${f:t}
+    if kill -0 "$pid" 2>/dev/null; then
+      used+=("$(<"$f")")
+    else
+      rm -f -- "$f"         # stale claim from a dead session
+    fi
+  done
+
+  for color in "${pool[@]}"; do
+    (( ${used[(Ie)$color]} )) || break
+  done
+
+  # Only auto-color when no positional prompt and not print/resume mode.
+  local a
+  for a in "$@"; do
+    case "$a" in
+      -p|--print|-r|--resume|-c|--continue) exec command claude "$@" ;;
+      -*) ;;
+      *) exec command claude "$@" ;;
+    esac
+  done
+
+  print -r -- "$color" > "$dir/$$"
+  exec command claude "/color $color" "$@"
+}
+
 # Machine-local additions, kept outside this repo
 [[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
