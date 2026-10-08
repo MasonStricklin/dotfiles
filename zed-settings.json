@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "search": {
+    "button": false
+  },
   "diff_view_style": "split",
   "disable_ai": true,
   "auto_install_extensions": {

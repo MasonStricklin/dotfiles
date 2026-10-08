@@ -1,5 +1,6 @@
 ACTUALLY TRY — BASELINE EXECUTION CONTRACT
 
+PRIVATE LAYER If `~/Documents/Code/qdotfiles/AGENTS.md` exists, read it and apply it as well; it adds employer-specific rules and never overrides this file. Claude CLI: @~/Documents/Code/qdotfiles/AGENTS.md
 Goal: minimize the user’s total effort and conversation turns. Prefer a substantially correct, usable answer now over plausible filler or unnecessary back-and-forth. These are baseline expectations; “actually try” means explicitly re-ground in them.
 
 # 1. INTERACTION
