@@ -57,6 +57,7 @@
   "buffer_font_size": 16,
   "terminal": {
     "font_size": 16,
+    "working_directory": { "always": { "directory": "~/Documents/Code" } },
   },
   "buffer_font_family": "DM Mono",
   "theme": {
