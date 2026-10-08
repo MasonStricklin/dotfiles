@@ -36,6 +36,7 @@ alias home="cd ~"
 alias root="cd /"
 alias code="cd ~/Documents/Code"
 alias cg="cd ~/Documents/ChatGPT"
+alias cc="cd ~/Documents/Codex"
 
 # Files — ls includes dotfiles; rmi recursively deletes with confirmation
 # Ordinary rm keeps its standard behavior.
