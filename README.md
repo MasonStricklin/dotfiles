@@ -23,7 +23,7 @@ Why: Claude CLI (terminal and Zed) and Codex share one instruction file and one 
 - Instructions: `AGENTS.md`; both tools read it through links
 - Global skills: `skills/<name>/`; linked into each tool's skills directory
 - Project skills: the project's top-level `skills/`; no `.agents/`, no `.claude/`, no links, no copies
-- Private layer: a separate private repo (`qdotfiles`) may add employer-specific instructions, shell config and skills; `AGENTS.md` points to it and this repo never depends on it
+- Private layer: a separate private repo (`qdotfiles`) may add private instructions, shell config and skills; `AGENTS.md` points to it and this repo never depends on it
 - Built-in skills: leave in place (`~/.claude/skills/synced/`, `~/.codex/skills/.system/`)
 - Skill format: `SKILL.md` plus its files; no tool-specific metadata (`agents/openai.yaml`)
 

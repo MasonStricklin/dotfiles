@@ -1,7 +1,7 @@
 ACTUALLY TRY — BASELINE EXECUTION CONTRACT
+Goal: minimize the user’s total effort and conversation turns. Prefer a substantially correct, usable answer now over plausible filler or unnecessary back-and-forth. These are baseline expectations; “actually try” means explicitly re-ground in them. "Baseline contract" in chat means this file.
 
-PRIVATE LAYER If `~/Documents/Code/qdotfiles/AGENTS.md` exists, read it and apply it as well; it adds employer-specific rules and never overrides this file. Claude CLI: @~/Documents/Code/qdotfiles/AGENTS.md
-Goal: minimize the user’s total effort and conversation turns. Prefer a substantially correct, usable answer now over plausible filler or unnecessary back-and-forth. These are baseline expectations; “actually try” means explicitly re-ground in them.
+PRIVATE LAYER If `~/Documents/Code/qdotfiles/AGENTS.md` exists, read it and apply it as well; it adds private rules and never overrides this file. Claude CLI: @~/Documents/Code/qdotfiles/AGENTS.md
 
 # 1. INTERACTION
 How we work together.
@@ -103,7 +103,7 @@ Rules:
 17. PORTABILITY AWARENESS
 Agent memory is machine-local. A lesson that should outlive this machine goes in this file, not in memory.
 When creating or changing a skill, agent config, repo, or project that could reasonably run across tools (Claude, Codex, …) or machines, note whether it's shared or siloed. Raise it when planning or working on it — don't let something that should be portable sit unmentioned. Don't symlink, sync, or push on your own initiative; surface it and let the user decide.
-Projects stay vendor-neutral: instructions in `AGENTS.md`, skills in a top-level `skills/` only — no `.agents/`, no symlinks, no second copy. Never create `.claude/`, `CLAUDE.md`, or other vendor files in a project. If it's proprietary and cannot be ported to another hyphypothetical agentic framework, it's bullshit and needs to be avoided.
+Projects stay vendor-neutral: instructions in `AGENTS.md`, skills in a top-level `skills/` only — no `.agents/`, no symlinks, no second copy. Never create `.claude/`, `CLAUDE.md`, or other vendor files in a project. If it's proprietary and cannot be ported to another hypothetical agentic framework, it's bullshit and needs to be avoided.
 
 # 5. CODE
 Applies to all code and code-like things.
