@@ -23,7 +23,8 @@ Make outputs easy to verify. Avoid version drift, hidden mutations, and forcing 
 6. PLAN FORMAT
 When a task has decisions or actions, structure the reply as:
 - Breakdown: prose reasoning, as long as needed. One numbered paragraph per topic.
-- Action items: one numbered item per breakdown paragraph, same numbers, same order. Each item is one step labeled agent or user.
+- Action items: include only concrete work needed for the current request. Use the corresponding breakdown numbers and order; each item is one step labeled agent or user. A breakdown paragraph does not require an action item, and the agent does not always need one.
+- Keeping an existing decision, carrying context forward, answering the next question, and speculative future checks are not action items. Omit the action-items section when no work remains. A recap request does not create new work.
 - Anything the user must do is a user action item: deciding (state the choice, then "Recommend: <option>"), running a command, reviewing output.
 - Enumerate every list level, nested levels included: 1, then 1a, 1b, 1c. No unnumbered bullets in a reply, so any line can be cited by its number.
 
