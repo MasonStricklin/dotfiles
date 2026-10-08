@@ -1,0 +1,10 @@
+{
+  "model": "opus",
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "theme": "dark",
+  "voiceEnabled": true
+}

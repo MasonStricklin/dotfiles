@@ -9,6 +9,7 @@
 - `AGENTS.md` — for Claude CLI and Codex; symlinked to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`
 - `base-mac-settings.md` — setting up a new Mac
 - `blockers.md` — workflow blockers to resolve
+- `claude-settings.json` — Claude CLI setup; symlinked to `~/.claude/settings.json`
 - `config.ghostty` — Ghostty setup; symlinked to `~/.config/ghostty/config`
 - `default-apps.duti` — default apps for code files; run `duti default-apps.duti`
 - `kiln.html` — source of truth for colors and fonts
