@@ -5,7 +5,7 @@
 - `.gitignore` — ignores `.DS_Store`
 - `.hushlogin` — quiet terminal startup; symlinked into `~`
 - `.vimrc` — Vim setup; symlinked into `~`
-- `.zshrc` — shell setup; symlinked into `~`
+- `.zshrc` — shell setup; symlinked into `~`; sources `~/.zshrc.local` last if present
 - `AGENTS.md` — for Claude CLI and Codex; symlinked to `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`
 - `base-mac-settings.md` — setting up a new Mac
 - `blockers.md` — workflow blockers to resolve

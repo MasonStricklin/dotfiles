@@ -71,3 +71,6 @@ for highlighting_file in \
     fi
 done
 unset highlighting_file
+
+# Machine-local additions, kept outside this repo
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
